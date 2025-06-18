@@ -7,10 +7,10 @@ export const authGuard = () => {
   const router = inject(Router);
 
   if (authService.isLoggedIn()) {
-    return true;
+    return false;
   } else {
     router.navigate(['/login']);
-    return false;
+    return true;
   }
 };
 

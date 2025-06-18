@@ -1,0 +1,28 @@
+.bg{
+  background: radial-gradient(50% 162% at 50% 50%, rgba(146, 207, 79, 0.2) 0%, rgba(146, 207, 79, 0.05) 100%);
+
+}
+:host ::ng-deep .ant-btn-primary {
+  background-color: #000000 !important;
+  border: 1px solid #C4C4C4 !important;
+  border-radius: 8px !important;
+  color: white !important;
+  height: 40px !important;
+  box-shadow: none !important;
+
+  &:hover,
+  &:focus {
+    background-color: #1a1a1a !important;
+    border-color: #C4C4C4 !important;
+  }
+
+  &:disabled,
+  &[disabled] {
+    background-color: #f5f5f5 !important;
+    border-color: #d9d9d9 !important;
+    color: rgba(0, 0, 0, 0.25) !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    cursor: not-allowed;
+  }
+}

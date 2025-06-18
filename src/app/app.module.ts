@@ -20,7 +20,11 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzAnchorModule } from 'ng-zorro-antd/anchor';
 import { CreateMerchantComponent } from './modules/merchant-management/create-merchant/create-merchant.component';
 import { MerchantLogsComponent } from './modules/merchant-management/merchant-logs/merchant-logs.component';
-
+import { LoginComponent } from './pages/login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 
 
 @NgModule({
@@ -31,7 +35,9 @@ import { MerchantLogsComponent } from './modules/merchant-management/merchant-lo
     MainLayoutComponent,
     SidebarComponent,
     CreateMerchantComponent,
-    MerchantLogsComponent
+    MerchantLogsComponent,
+    LoginComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     HttpClientModule,
@@ -45,6 +51,9 @@ import { MerchantLogsComponent } from './modules/merchant-management/merchant-lo
     NzBreadCrumbModule,
     NzAvatarModule,
     NzAnchorModule,
+    ReactiveFormsModule,
+    NzInputModule,
+    NzButtonModule,
     RouterModule.forRoot([]),
   ],
   providers: [
