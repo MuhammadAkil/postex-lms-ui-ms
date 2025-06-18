@@ -1,0 +1,107 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400..700&display=swap");
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "assets/variables";
+
+:root {
+  --gold-color: #faad14;
+  --primary-color: #000000;
+  --secondary-color: #92cf534d;
+  --light-primary-color: hsla(0, 0%, 0%, 0.7);
+  --light-blue-color: #e2f2ff;
+  --red-color: #f5222d;
+  --cyan-color: #13c2c2;
+  --green-color: #a0d911;
+  --light-green-color: #92cf53;
+  --lightest-green-color: #def1cb;
+  --yellow-color: #fadb14;
+  --volcano-color: #fa541c;
+  --orange-color: #fa8c16;
+  --lime-color: #a0d911;
+  --grey-color: #d9d9d9;
+  --dark-grey-color: #a4a4a4;
+  // color codes
+  --muted-color: #f3f4f8;
+  --lightest-grey-color: #fafafa;
+  --darkest-grey-color: #919598;
+  --darkest2-grey-color: #75747f;
+  --danger-color: #f36262;
+  --light-danger-color: #ffecec;
+  --warning-color: #edba36;
+  --light-warning-color: #f443364d;
+  --light-orange-color: #eea552;
+  --success-color: #3bb500;
+  --blue-color: #1566fa;
+  --light-blue-color: #2196f3;
+  --lightest-blue-color: #add7f963;
+  --black-color: #283144;
+  --pure-black-color: #000000;
+  --button-text: #ffff;
+  --light-blue-grey-color: #f0f7fb;
+
+  // other variables
+  --header-height: 60px;
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+
+html,
+body {
+  // font-family: $font-family !important;
+  font-family: "Roboto", sans-serif;
+  // font-size: 12px;
+  font-size: 16px !important;
+
+  .cdk-overlay-dark-backdrop {
+    background-color: #8d8b8bcc;
+    // opacity: 0.5 !important;
+  }
+
+  scrollbar-width: thin;
+}
+
+.ant-pagination-disabled .ant-pagination-item-link,
+.ant-pagination-next .ant-pagination-item-link {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  // padding-top: 2px;
+}
+
+.ant-table-header {
+  overflow: hidden !important;
+}
+.ant-select-dropdown,
+.ant-dropdown {
+  ::-webkit-scrollbar {
+    width: 15px;
+    background-color: #f5f5f5;
+  }
+  ::-webkit-scrollbar-thumb {
+    height: 30px;
+    background-color: grey;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: #f5f5f5;
+  }
+}
+
+.overlay {
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  cursor: none;
+  opacity: 0.7;
+  pointer-events: none;
+}

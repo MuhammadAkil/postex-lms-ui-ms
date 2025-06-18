@@ -1,0 +1,45 @@
+<nz-layout>
+    <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="triggerTemplate" nzTheme="light" nzWidth="256px" nzBreakpoint="md" class="border-[#D9D9D9]">
+        <div class="logo">
+            <a routerLink="/app" class="flex w-full px-8">
+                <img src="assets/images/postex-logo.png" class="max-w-[74px] h-full">
+            </a>
+        </div>
+        <app-sidebar [isCollapsed]="isCollapsed"></app-sidebar>
+    </nz-sider>
+    <nz-layout>
+        <nz-header>
+            <div class="app-header flex items-center gap-4 justify-between">
+                <span class="trigger" (click)="toggleCollapsed()" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
+                <div class="flex flex-grow-1 w-full">
+                    <app-header></app-header>
+                </div>
+            </div>
+        </nz-header>
+        <nz-content>
+            <nz-breadcrumb>
+                <nz-breadcrumb-item *ngFor="let breadcrumb of breadcrumbs" [routerLink]="breadcrumb.url">{{ breadcrumb.label }}</nz-breadcrumb-item>
+            </nz-breadcrumb>
+            <div class="inner-content">
+                <router-outlet></router-outlet>
+            </div>
+        </nz-content>
+    </nz-layout>
+</nz-layout>
+
+<nz-dropdown-menu #userMenu="nzDropdownMenu">
+    <ul nz-menu class="w-48">
+        <li nz-menu-item class="flex items-center gap-3 text-black font-normal">
+            {{fullName || 'User'}}
+        </li>
+        <li nz-menu-divider></li>
+        <li nz-menu-item class="flex items-center gap-3 fg-danger font-medium" (click)="logout()">
+            <span translate>Logout</span>
+            <span nz-icon nzType="arrow-right" nzTheme="outline"></span>
+        </li>
+    </ul>
+</nz-dropdown-menu>
+
+<ng-template #triggerTemplate>
+    <span (click)="toggleCollapsed()" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
+</ng-template>

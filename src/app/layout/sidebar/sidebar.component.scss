@@ -1,0 +1,132 @@
+#sideNav {
+    height: calc(100vh - 150px); /* Adjust based on header/footer height */
+}
+
+.heading {
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+    padding: 8px 16px;
+    text-transform: uppercase;
+}
+
+.copyrightText {
+    padding: 0 16px;
+    position: absolute;
+    bottom: 12px;
+    width: 100%;
+}
+
+.copyright {
+    color: #666;
+}
+
+.divider {
+    background-color: #ccc;
+}
+
+.menuLink {
+    color: #333;
+    font-size: 14px;
+}
+
+nz-menu {
+    background: #fff;
+}
+
+nz-submenu {
+    margin-bottom: 8px;
+}
+
+nz-menu-item:hover,
+nz-submenu:hover {
+    background: #f5f5f5;
+}
+#sideNav {
+  height: calc(100vh - 150px);
+  overflow-y: auto;
+
+  .heading {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 14px;
+    text-transform: uppercase;
+    color: #75747f;
+    margin: 20px 5px 10px 5px;
+    width: max-content;
+
+    &::after {
+      display: block;
+      content: '';
+      width: 70%;
+      border-bottom: 1px solid #75747f;
+      padding-top: 5px;
+      opacity: 0.6;
+    }
+  }
+
+  nz-menu {
+    background: #fff;
+  }
+
+  nz-submenu {
+    margin-bottom: 8px;
+  }
+
+  nz-menu-item {
+    position: relative;
+
+    .menuLink {
+      position: relative;
+      font-size: 14px;
+      color: #333;
+
+      &::before {
+        position: absolute;
+        content: '';
+        width: 8px;
+        height: 8px;
+        background-color: #919598;
+        border-radius: 50%;
+        top: 50%;
+        transform: translateY(-50%);
+        left: -20px;
+      }
+    }
+
+    &.nz-menu-item-selected {
+      .menuLink {
+        &::before {
+          background-color: #000;
+        }
+      }
+    }
+
+    &::after {
+      border-right: none;
+      border-right-color: #1566fa;
+      border-radius: 2px;
+    }
+  }
+
+  nz-menu-item:hover,
+  nz-submenu:hover {
+    background: #f5f5f5;
+  }
+
+  .copyrightText {
+    padding: 0 16px;
+    position: absolute;
+    bottom: 12px;
+    width: 100%;
+  }
+
+  .copyright {
+    color: #666;
+  }
+
+  .divider {
+    background-color: #ccc;
+  }
+}
