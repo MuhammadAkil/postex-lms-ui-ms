@@ -28,13 +28,13 @@ export const SideNavMenuList: SideNavObj[] = [
             },
             {
                 title: "Merchant Management",
-                url: "",
+                url: "/app/merchant",
                 svgIcon: "merchantManagementSvgIcon",
                 icon: "",
                 allowed: true,
                 subMenu: [
                     { title: "Create Merchant", icon: "", url: "/app/merchant/create-merchant", allowed: true },
-                    { title: "Merchant logs", icon: "", url: "/app/merchantmerchat-logs", allowed: true },
+                    { title: "Merchant logs", icon: "", url: "/app/merchant/merchat-logs", allowed: true },
                 ],
             },
             // {

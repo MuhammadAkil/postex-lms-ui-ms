@@ -1,0 +1,37 @@
+.actionWrap {
+  padding: 16px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tableWrap {
+  padding: 16px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 16px;
+}
+
+nz-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+
+  th,
+  td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e8e8e8;
+  }
+
+  th {
+    background-color: #f5f5f5;
+    font-weight: 500;
+    color: #595959;
+  }
+
+  td {
+    color: #2c2c2c;
+  }
+}

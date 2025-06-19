@@ -1,1 +1,55 @@
-<p>merchant-logs works!</p>
+<div class="actionWrap flex justify-between items-center mb-4">
+  <div class="actionBtn flex items-center gap-4">
+    <button nz-button class="min-w-[100px] bg-blue-600 text-white flex justify-center items-center gap-2 py-2 px-3.5 font-medium border border-solid border-blue-600 rounded transition">
+      <span nz-icon nzType="plus" nzTheme="outline"></span>
+      <span>Add Merchant</span>
+    </button>
+  </div>
+  <div class="searchInput max-w-[383px] w-full">
+    <nz-input-group [nzSuffix]="suffixIconSearch" class="rounded-md">
+      <input [(ngModel)]="searchText" name="search" nz-input nzBorderless placeholder="Search Keyword" class="w-full text-sm font-normal text-gray-700" />
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+      <span nz-icon nzType="search" class="text-gray-400"></span>
+    </ng-template>
+  </div>
+</div>
+
+<div class="tableWrap">
+  <nz-table [nzData]="listOfData" nzTableLayout="fixed" class="overflow-visible">
+    <thead>
+      <tr>
+        <th translate>SR#</th>
+        <th translate>LMS ID</th>
+        <th translate>Partner</th>
+        <th translate>Partner Account ID</th>
+        <th translate>Merchant</th>
+        <th translate>Owner</th>
+        <th translate>Type</th>
+        <th translate>Registration Date</th>
+        <th translate>Compliance Status</th>
+        <th translate>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of listOfData">
+        <td>{{ data.sr }}</td>
+        <td>{{ data.lmsId }}</td>
+        <td>{{ data.partner }}</td>
+        <td>{{ data.partnerAccountId }}</td>
+        <td>{{ data.merchant }}</td>
+        <td>{{ data.owner }}</td>
+        <td>{{ data.type }}</td>
+        <td>{{ data.registrationDate | date:'yyyy-MM-dd' }}</td>
+        <td>
+          <span [ngClass]="{'text-green-600': data.complianceStatus === 'Approved', 'text-yellow-600': data.complianceStatus === 'Pending'}">
+            {{ data.complianceStatus }}
+          </span>
+        </td>
+        <td>
+          <span nz-icon nzType="more" nzTheme="outline" class="cursor-pointer"></span>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
