@@ -11,7 +11,7 @@ const routes: Routes = [
     loadChildren: () => import('./layout/layout.module').then(m => m.LayoutModule)
   },
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
-  { path: '**', redirectTo: 'auth' }
+  { path: '**', redirectTo: 'auth' } 
 ];
 
 @NgModule({

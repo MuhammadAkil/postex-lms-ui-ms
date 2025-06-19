@@ -7,11 +7,15 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { NzAnchorModule } from 'ng-zorro-antd/anchor';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 const routes: Routes = [
   { path: '', redirectTo: 'logs', pathMatch: 'full' },
   { path: 'create', component: CreateMerchantComponent, data: { breadcrumb: 'Create Merchant' } },
+  { path: 'edit', component: CreateMerchantComponent, data: { breadcrumb: 'Edit Merchant' } },
   { path: 'logs', component: MerchantLogsComponent, data: { breadcrumb: 'Merchant Logs' } }
 ];
 
@@ -31,6 +35,14 @@ const routes: Routes = [
     NzInputModule,
     FormsModule,
     RouterModule,
+    NzBreadCrumbModule,
+    NzAnchorModule,
+    NzAnchorModule,
+    ReactiveFormsModule,
+
+    NzBreadCrumbModule,
+    NzSelectModule,
+    
     RouterModule.forChild(routes)
   ],
   exports: [RouterModule]

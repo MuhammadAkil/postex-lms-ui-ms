@@ -30,7 +30,7 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
-      { path: 'merchant', loadChildren: () => import('../modules/merchant-management/merchant.module').then(m => m.MerchantModule) },
+      { path: 'merchant', loadChildren: () => import('../modules/merchant-management/merchant.module').then(m => m.MerchantModule)},
     ]
   }
 ];

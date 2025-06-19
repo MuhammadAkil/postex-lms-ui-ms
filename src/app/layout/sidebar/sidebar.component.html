@@ -1,33 +1,27 @@
 <div id="sideNav" class="pb-12 overflow-y-auto">
-    <ul nz-menu nzMode="inline" class="p-2 pb-12 mt-4" [nzInlineCollapsed]="isCollapsed">
-        <ng-container *ngFor="let child of sideMenuList; let i=index">
-            <hr *ngIf="i > 0" class="my-8">
-            <div class="heading" *ngIf="child.heading && !isCollapsed">{{child.heading}}</div>
-            <ng-container *ngFor="let option of child.subMenu">
-                <li *ngIf="option.allowed" [(nzOpen)]="openMap[option.moduleId?.toString() || option.title]" (nzOpenChange)="openHandler(option.moduleId?.toString() || option.title)" nz-submenu [nzTitle]="option.url ? parentMenuUrl : parentMenu" class="mb-2">
-                    <ng-template #parentMenu>
-                        <div class="flex items-center gap-3">
-                            <ng-container *ngTemplateOutlet="svgIconTemp; context:{svgIcon: option.svgIcon}"></ng-container>
-                            {{option.title}}
-                        </div>
-                    </ng-template>
-                    <ng-template #parentMenuUrl>
-                        <div class="flex items-center w-full gap-3" (click)="routeChanger(option)">
-                            <ng-container *ngTemplateOutlet="svgIconTemp; context:{svgIcon: option.svgIcon}"></ng-container>
-                            {{option.title}}
-                        </div>
-                    </ng-template>
-                    <ul *ngIf="option.subMenu?.length">
-                        <ng-container *ngFor="let subOption of option.subMenu">
-                            <li *ngIf="subOption.allowed" [hidden]="subOption.isHide" nz-menu-item [nzMatchRouter]="true" [routerLink]="subOption.url">
-                                <a class="menuLink">{{subOption.title}}</a>
-                            </li>
-                        </ng-container>
-                    </ul>
-                </li>
+  <ul nz-menu nzMode="inline" class="p-2 pb-12 mt-4" [nzInlineCollapsed]="isCollapsed">
+    <ng-container *ngFor="let child of sideMenuList; let i=index">
+      <hr *ngIf="i > 0" class="my-8 divider">
+      <div class="heading" *ngIf="child.heading && !isCollapsed">{{child.heading}}</div>
+      <ng-container *ngFor="let option of child.subMenu">
+        <li *ngIf="option.allowed" [(nzOpen)]="openMap[option.moduleId?.toString() || option.title]" (nzOpenChange)="openHandler(option.moduleId?.toString() || option.title)" nz-submenu [nzTitle]="parentMenu" class="mb-2">
+          <ng-template #parentMenu>
+            <div class="flex items-center gap-3">
+              <ng-container *ngTemplateOutlet="svgIconTemp; context:{svgIcon: option.svgIcon}"></ng-container>
+              <span class="menu-title" *ngIf="!isCollapsed">{{option.title}}</span>
+            </div>
+          </ng-template>
+          <ul *ngIf="option.subMenu?.length">
+            <ng-container *ngFor="let subOption of option.subMenu">
+              <li *ngIf="subOption.allowed" [hidden]="subOption.isHide" nz-menu-item [nzMatchRouter]="true" [routerLink]="subOption.url" [nzSelected]="isActive(subOption.url)">
+                <a class="menuLink"><span class="bullet">•</span>{{subOption.title}}</a>
+              </li>
             </ng-container>
-        </ng-container>
-    </ul>
+          </ul>
+        </li>
+      </ng-container>
+    </ng-container>
+  </ul>
 </div>
 
 <ng-template #svgIconTemp let-svgIcon="svgIcon">
