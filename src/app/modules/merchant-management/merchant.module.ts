@@ -11,6 +11,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzAnchorModule } from 'ng-zorro-antd/anchor';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { SharedModule } from '../shared/shared.module';
+import { MatMenuModule } from '@angular/material/menu';
 
 const routes: Routes = [
   { path: '', redirectTo: 'logs', pathMatch: 'full' },
@@ -39,10 +42,12 @@ const routes: Routes = [
     NzAnchorModule,
     NzAnchorModule,
     ReactiveFormsModule,
-
+    NzDatePickerModule,
     NzBreadCrumbModule,
     NzSelectModule,
-    
+    SharedModule,
+    MatMenuModule,
+    NzButtonModule,
     RouterModule.forChild(routes)
   ],
   exports: [RouterModule]

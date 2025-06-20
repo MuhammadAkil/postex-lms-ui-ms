@@ -20,6 +20,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { EyeOutline, EyeInvisibleOutline } from '@ant-design/icons-angular/icons';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 const routes: Routes = [
@@ -59,7 +60,8 @@ const routes: Routes = [
     NzButtonModule,
     NzBreadCrumbModule,
     NzDropDownModule,
-
+    NzMenuModule,
+    MatMenuModule,
     
   ]
 })

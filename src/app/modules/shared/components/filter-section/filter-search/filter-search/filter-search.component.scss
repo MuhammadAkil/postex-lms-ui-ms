@@ -1,0 +1,119 @@
+#filter-search {
+    nz-tag {
+        font-size: 13px;
+
+        ::ng-deep {
+            i.anticon.ant-tag-close-icon.anticon-close {
+                color: red;
+                font-size: 12px;
+            }
+        }
+    }
+
+    button.ant-btn {
+        padding: 10px;
+    }
+}
+
+::ng-deep {
+    .filter-search-section {
+        top: 245px !important;
+        left: 270px !important;
+
+        .filter-menu {
+            border: 1px solid #DADADA;
+            border-radius: 15px;
+            width: 99%;
+        }
+
+        .text-width {
+            width: 600px;
+        }
+
+        .date-width,
+        .select-width {
+            width: 300px !important;
+        }
+
+        @media (min-width:1438px) and (max-width: 1549px) {
+            .text-width {
+                width: 545px;
+            }
+
+            .date-width,
+            .select-width {
+                width: 270.5px !important;
+            }
+        }
+
+        @media (min-width:1346px) and (max-width: 1437px) {
+            .text-width {
+                width: 500px;
+            }
+
+            .date-width,
+            .select-width {
+                width: 328px !important;
+            }
+
+        }
+
+        @media (min-width:1244px) and (max-width: 1345px) {
+            .text-width {
+                width: 440px;
+            }
+
+            .date-width,
+            .select-width {
+                width: 289px !important;
+            }
+        }
+
+        @media (min-width:1225px) and (max-width: 1243px) {
+            .text-width {
+                width: 440px;
+            }
+
+            .date-width,
+            .select-width {
+                width: 289px !important;
+            }
+        }
+
+        @media only screen and (max-width: 1224px) {
+            .filter-menu {
+                width: 70%;
+            }
+
+            .date-width,
+            .select-width {
+                width: 289px !important;
+            }
+        }
+
+        @media only screen and (max-width: 1179px) {
+            .text-width {
+                width: 450px;
+            }
+
+            .date-width,
+            .select-width {
+                width: 450px !important;
+            }
+        }
+
+        [ant-click-animating-without-extra-node='true']::after {
+            display: none;
+        }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    }
+
+}

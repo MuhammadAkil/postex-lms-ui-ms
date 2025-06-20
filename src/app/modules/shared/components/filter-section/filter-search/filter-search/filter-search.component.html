@@ -1,0 +1,177 @@
+<div id="filter-search">
+    <div class="flex flex-wrap items-center gap-3">
+        <button nz-button nzType="primary" class="ant-btn button-secondary !rounded px-4 border !border-gray-200"
+            [matMenuTriggerFor]="actionMenu" #menuTrigger="matMenuTrigger">
+            <!-- <span nz-icon nzType="filter" nzTheme="outline"></span> -->
+            <svg class="mr-2" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M5.38478 9.99992H14.6155M3.3335 5.83325H16.6668M8.4617 14.1666H11.5386" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+            Filter
+        </button>
+        <ng-container *ngFor="let chip of chips">
+            <nz-tag class="mx-1 px-4 !rounded-full h-[36px] w-max flex items-center border " nzMode="closeable"
+                (nzOnClose)="onChipCancel($event,chip.label)">
+                <b>{{chip.label}}</b>: &nbsp;
+                <span [innerHtml]="chip.value"></span>
+            </nz-tag>
+        </ng-container>
+        <nz-tag *ngIf="chips.length > 0"
+            class="mx-1 px-4 !rounded-full h-[36px] w-max flex items-center border border-[--red-color] text-[--red-color] cursor-pointer"
+            (click)="clear()">
+            <span [innerHtml]="'Clear All Filters'"></span>
+        </nz-tag>
+
+    </div>
+
+    <mat-menu class="filter-menu" #actionMenu="matMenu" (keydown.escape)="$event.stopPropagation()" xPosition="after">
+        <div (click)="$event.stopPropagation()">
+            <div id="filter-content" (click)="$event.stopPropagation()" class="flex gap-x-3 flex-wrap !p-5 !pb-0.5">
+
+                <ng-container *ngFor="let field_ of filters">
+                    <ng-container *ngIf="field_['customerField']">
+                        <ng-container
+                            *ngTemplateOutlet="customerSearchTextField; context: {customerFields_:[field_['customerField']]}"></ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="field_['searchField']">
+                        <ng-container
+                            *ngTemplateOutlet="OrderSearchTextField; context: {orderFields_:[field_['searchField']]}"></ng-container>
+                    </ng-container>
+                    <!-- <ng-container *ngIf=" field_.type === 'date' ">
+                        <ng-container *ngTemplateOutlet="dateField; context: {field:field_}"></ng-container>
+                    </ng-container> -->
+                    <ng-container *ngIf=" field_.type === 'select' ">
+                        <ng-container *ngTemplateOutlet="selectField; context: {field:field_}"></ng-container>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </div>
+        <hr>
+        <div class="flex items-center justify-end gap-5 mt-2 px-5">
+            <button type="button" nz-button
+                class="min-w-[100px] button-clearAllFilter ant-btn !rounded-full border p-2" (click)="clear()"> Clear
+                All Filter</button>
+            <button type="button" nz-button class="min-w-[100px] button-primary ant-btn !rounded-full"
+                (click)="onSubmit()"> Apply Filter</button>
+        </div>
+    </mat-menu>
+
+    <ng-template #customerSearchTextField let-customerField="customerFields_">
+        <form nz-form [nzLayout]="'horizontal'">
+            <nz-form-item>
+                <div class="">
+                    <label class="capitalize text-sm">{{customerField[0][0].label}}</label>
+                    <nz-form-control *ngFor="let field of customerField">
+                        <div
+                            class="flex h-[45px] border border-[--muted-color] rounded-full bg-[--text-color] hover:border-r-2 hover:border-[--muted-color] overflow-hidden mt-2 text-width">
+                            <input class="grow border-transparent bg-transparent px-2.5"
+                                type="{{customerSelectedInputField.type}}"
+                                name="{{customerSelectedInputField.variable}}-name"
+                                id="{{customerSelectedInputField.variable}}-id"
+                                placeholder="{{customerSelectedInputField.placeholder || 'Search...'}}" nzBorderless
+                                style="outline: none;" onfocus="this.style.outline = 'none'"
+                                [(ngModel)]="customerSelectedInputField.value"
+                                [disabled]="!customerSelectedInputField.variable"
+                                [ngClass]="!customerSelectedInputField.variable ? 'cursor-not-allowed' : 'cursor-auto'"
+                                [nzTooltipTitle]="!customerSelectedInputField.variable ? 'Select an Option' : ''"
+                                nzTooltipPlacement="bottom" nz-tooltip>
+                            <span class=" flex gap-2 px-1.5 bg-transparent">
+                                <ng-container *ngFor="let fieldOptions of field">
+                                    <ul class="flex items-center">
+                                        <li class="list-none relative h-full flex items-center">
+                                            <input class="absolute opacity-0 hidden peer" type="radio"
+                                                name="{{fieldOptions.dafaultType}}" nzBorderless
+                                                id="{{fieldOptions.variable}}"
+                                                (click)="onInputFieldSelected(fieldOptions)">
+                                            <label
+                                                class="text-white px-4 !font-medium capitalize cursor-pointer bg-[#6d7174d1] border-radius-5 rounded-full border w-max py-1 peer-checked:text-[--hover-color] peer-checked:border-[#6d7174d1]  peer-checked:bg-[--primary-color] overflow-hidden"
+                                                for="{{fieldOptions.variable}}">{{fieldOptions.label}}</label>
+                                        </li>
+                                    </ul>
+                                </ng-container>
+                            </span>
+                        </div>
+                    </nz-form-control>
+                </div>
+            </nz-form-item>
+        </form>
+    </ng-template>
+
+    <ng-template #OrderSearchTextField let-orderField="orderFields_">
+        <form nz-form [nzLayout]="'horizontal'">
+            <nz-form-item>
+                <div class="">
+                    <label class="capitalize text-sm">{{orderField[0][0].dafaultType}}</label>
+                    <nz-form-control *ngFor="let field of orderField">
+                        <div
+                            class="flex h-[45px] border border-[--muted-color] rounded-full bg-[--text-color] hover:border-r-2 hover:border-[--muted-color] overflow-hidden mt-2 text-width">
+                            <input class="grow border-transparent bg-transparent px-2.5"
+                                type="{{orderSearchSelectedInputField.type}}"
+                                name="{{orderSearchSelectedInputField.variable}}-name"
+                                id="{{orderSearchSelectedInputField.variable}}-id"
+                                placeholder="{{orderSearchSelectedInputField.placeholder || 'Search...'}}" nzBorderless
+                                style="outline: none;" onfocus="this.style.outline = 'none'"
+                                [(ngModel)]="orderSearchSelectedInputField.value"
+                                [disabled]="!orderSearchSelectedInputField.variable"
+                                [ngClass]="!orderSearchSelectedInputField.variable ? 'cursor-not-allowed' : 'cursor-auto'"
+                                [nzTooltipTitle]="!orderSearchSelectedInputField.variable ? 'Select an Option' : ''"
+                                nzTooltipPlacement="bottom" nz-tooltip>
+                            <span class=" flex gap-2 px-1.5 bg-transparent">
+                                <ng-container *ngFor="let fieldOptions of field">
+                                    <ul class="flex items-center">
+                                        <li class="list-none relative h-full flex items-center">
+                                            <input class="absolute opacity-0 hidden peer" type="radio"
+                                                name="{{fieldOptions.dafaultType}}" nzBorderless
+                                                id="{{fieldOptions.variable}}"
+                                                (click)="onInputFieldSelected(fieldOptions)">
+                                            <label
+                                                class="text-white px-4 !font-medium capitalize cursor-pointer bg-[#6d7174d1] border-radius-5 rounded-full border w-max py-1 peer-checked:text-[--hover-color] peer-checked:border-[#6d7174d1]  peer-checked:bg-[--primary-color]"
+                                                for="{{fieldOptions.variable}}">{{fieldOptions.label}}</label>
+                                        </li>
+                                    </ul>
+                                </ng-container>
+                            </span>
+                        </div>
+                    </nz-form-control>
+                </div>
+            </nz-form-item>
+        </form>
+    </ng-template>
+
+    <!-- <ng-template #dateField let-field="field">
+        <div class="flex-wrap">
+            <label class="capitalize text-sm">{{field.label}}</label>
+            <form nz-form class="mt-2">
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="">
+                        <nz-range-picker [nzDisabledDate]="disabledDate" nzSecondStep nzSeparator="-"
+                            name="{{field.variable}}-name" id="{{field.variable}}-id" [(ngModel)]="field.value"
+                            (ngModelChange)="onDateChange($event, field)"
+                            class="flex h-[45px] border border-[--muted-color] rounded-full bg-[--text-color] hover:border-r-2 hover:border-[--muted-color] overflow-hidden hover:border-r-2 date-width"></nz-range-picker>
+                    </nz-form-control>
+                </nz-form-item>
+            </form>
+        </div>
+    </ng-template> -->
+
+    <ng-template #selectField let-field="field">
+        <div class="flex-wrap">
+            <label class="capitalize text-sm">{{field.label}}</label>
+            <form nz-form class="mt-2">
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="">
+                        <nz-select [nzPlaceHolder]="field.placeholder" name="{{field.variable}}-name"
+                            id="{{field.variable}}-id" [(ngModel)]="field.value" [nzBorderless]="true"
+                            [nzSize]="'default'"
+                            class="flex items-center h-[45px] border border-[--muted-color] rounded-full bg-[--text-color] hover:border-r-2 hover:border-[--muted-color] select-width">
+                            <ng-container *ngFor="let option of field.options">
+                                <nz-option *ngIf="!field?.ids?.length || field?.ids?.includes(option.value)"
+                                    [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                            </ng-container>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </form>
+        </div>
+    </ng-template>
+</div>

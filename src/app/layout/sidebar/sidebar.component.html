@@ -14,7 +14,7 @@
           <ul *ngIf="option.subMenu?.length">
             <ng-container *ngFor="let subOption of option.subMenu">
               <li *ngIf="subOption.allowed" [hidden]="subOption.isHide" nz-menu-item [nzMatchRouter]="true" [routerLink]="subOption.url" [nzSelected]="isActive(subOption.url)">
-                <a class="menuLink"><span class="bullet">•</span>{{subOption.title}}</a>
+                <a class="menuLink">{{subOption.title}}</a>
               </li>
             </ng-container>
           </ul>

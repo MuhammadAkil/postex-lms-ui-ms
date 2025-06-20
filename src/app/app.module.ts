@@ -20,8 +20,11 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { EyeOutline, EyeInvisibleOutline } from '@ant-design/icons-angular/icons';
 import { MerchantModule } from './modules/merchant-management/merchant.module';
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/en'
+import { en_US, NZ_I18N } from 'ng-zorro-antd/i18n';
 
-
+registerLocaleData(en);
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,6 +56,7 @@ import { MerchantModule } from './modules/merchant-management/merchant.module';
       useClass: AuthInterceptor,
       multi: true,
     },
+    { provide: NZ_I18N, useValue: en_US },
   ],
 
   bootstrap: [AppComponent]

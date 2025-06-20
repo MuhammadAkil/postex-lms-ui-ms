@@ -1,55 +1,79 @@
-<div class="actionWrap flex justify-between items-center mb-4">
-  <div class="actionBtn flex items-center gap-4">
-    <button nz-button class="min-w-[100px] bg-blue-600 text-white flex justify-center items-center gap-2 py-2 px-3.5 font-medium border border-solid border-blue-600 rounded transition">
-      <span nz-icon nzType="plus" nzTheme="outline"></span>
-      <span>Add Merchant</span>
-    </button>
-  </div>
-  <div class="searchInput max-w-[383px] w-full">
-    <nz-input-group [nzSuffix]="suffixIconSearch" class="rounded-md">
-      <input [(ngModel)]="searchText" name="search" nz-input nzBorderless placeholder="Search Keyword" class="w-full text-sm font-normal text-gray-700" />
-    </nz-input-group>
-    <ng-template #suffixIconSearch>
-      <span nz-icon nzType="search" class="text-gray-400"></span>
-    </ng-template>
-  </div>
-</div>
+<div id="edit-merchant" class="flex flex-col gap-2">
+    <nz-breadcrumb class="!my-4">
+        <nz-breadcrumb-item><a routerLink="/app/dashboard">Home</a></nz-breadcrumb-item>
+        <nz-breadcrumb-item> Merchant Management </nz-breadcrumb-item>
+    </nz-breadcrumb>
+    <div class="flex flex-col">
+        <!-- <div class="text-xl font-semibold mb-3">Merchant Management</div> -->
+           <app-filter-section (filterChange)="onFilterChange($event)" [columns]="listOfColumn">
+            <div class="action-left mr-auto flex gap-2 w-full">
+                <div class="w-full flex gap-3">
+                    <app-filter-search [filters]="filters"  (onSubmitEvent)="applyFilter($event)"></app-filter-search>
+                </div>
+            </div>
+            <!-- <div class="action-right">
+                <div
+                    class="rounded-full cursor-pointer bg-[--field-color] border border-[--field-color] hover:border-[--primary-color]  h-[40px] w-[68px] max-w-[40px] flex items-center">
+                    <img src="assets/svgs/upload.svg" class="mx-auto w-[18px] h-[18px]">
+                </div>
+            </div> -->
+        </app-filter-section>
 
-<div class="tableWrap">
-  <nz-table [nzData]="listOfData" nzTableLayout="fixed" class="overflow-visible">
-    <thead>
-      <tr>
-        <th translate>SR#</th>
-        <th translate>LMS ID</th>
-        <th translate>Partner</th>
-        <th translate>Partner Account ID</th>
-        <th translate>Merchant</th>
-        <th translate>Owner</th>
-        <th translate>Type</th>
-        <th translate>Registration Date</th>
-        <th translate>Compliance Status</th>
-        <th translate>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let data of listOfData">
-        <td>{{ data.sr }}</td>
-        <td>{{ data.lmsId }}</td>
-        <td>{{ data.partner }}</td>
-        <td>{{ data.partnerAccountId }}</td>
-        <td>{{ data.merchant }}</td>
-        <td>{{ data.owner }}</td>
-        <td>{{ data.type }}</td>
-        <td>{{ data.registrationDate | date:'yyyy-MM-dd' }}</td>
-        <td>
-          <span [ngClass]="{'text-green-600': data.complianceStatus === 'Approved', 'text-yellow-600': data.complianceStatus === 'Pending'}">
-            {{ data.complianceStatus }}
-          </span>
-        </td>
-        <td>
-          <span nz-icon nzType="more" nzTheme="outline" class="cursor-pointer"></span>
-        </td>
-      </tr>
-    </tbody>
-  </nz-table>
+        <div class="tableWrap mt-4">
+            <nz-table [nzLoading]="isLoading" [nzFrontPagination]="false" [nzShowPagination]="true" #basicTable
+                [nzData]="merchantDataList">
+                <thead>
+                    <tr><ng-container *ngFor="let column of listOfColumn">
+                            <th *ngIf="column.visible" [nzShowSort]="false">
+                                {{ column.title | uppercase }}
+                            </th>
+                        </ng-container>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of basicTable.data; let i=index;">
+                        <ng-container *ngFor="let coloumn of listOfColumn">
+                            <ng-container *ngIf="data && coloumn.visible">
+                                <ng-container [ngSwitch]="coloumn.property"  >
+                                    <td *ngSwitchCase="'serialNo'">{{i+1}}</td>
+                                    <td *ngSwitchCase="'merchantStatus'">
+                                        <div class="status {{data.merchantStatus}}">{{data.merchantStatus}}</div>
+                                    </td>
+                                    <td *ngSwitchCase="'action'">
+                                        <img [matMenuTriggerFor]="actionMenu" src="assets/svgs/more_action.svg"
+                                            class="h-[28px] w-[28px] border border-solid rounded-full hover:border-[--primary-color] cursor-pointer">
+                                        <mat-menu class="mt-2" #actionMenu="matMenu">
+                                            <div (click)="$event.stopPropagation()" class="action-label">Actions</div>
+                                            <!-- <nz-divider class="m-0"></nz-divider> -->
+                                            <button [routerLink]="['/app/merchant/detail',data.merchantId ]"
+                                                class="mt-2 flex items-center gap-3 fg-danger" mat-menu-item>
+                                                <img src="assets/svgs/view_merchant_icon.svg">
+                                                <span>View Details</span>
+                                            </button>
+                                            <button [routerLink]="['/app/merchant/edit',data.merchantId ]"
+                                                class="mt-2 flex items-center gap-3 fg-danger" mat-menu-item>
+                                                <i class="text-[--dark-secondary-color]" nz-icon nzTheme="outline"
+                                                    nzType="edit"></i>
+                                                <span>Edit Merchant</span>
+                                            </button>
+                                            <button (click)="updateMerchantStatus(data, data.merchantStatusId === 1 ? 2 : 1)"
+                                                class="mt-2 flex items-center gap-3 fg-danger" mat-menu-item>
+                                                <i class="text-[--dark-secondary-color]" nz-icon nzTheme="outline"
+                                                    nzType="interaction"></i>
+                                                    <span>{{ data.merchantStatusId === 1 ? 'Inactive' : 'Active' }}</span>
+                                                </button>
+
+                                        </mat-menu>
+                                    </td>
+                                    <td *ngSwitchDefault>{{ data[coloumn.property] || '-'}}</td>
+
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+                    </tr>
+                </tbody>
+            </nz-table>
+            <app-pagination [pagination]="pagination" (changeEvent)="paginationChange($event)"></app-pagination>
+        </div>
+    </div>
 </div>

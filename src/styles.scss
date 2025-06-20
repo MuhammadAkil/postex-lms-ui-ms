@@ -1,38 +1,33 @@
+@use '@angular/material' as mat;
+@include mat.core();
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-/* You can add global styles to this file, and also import other style files */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "assets/variables";
-/* You can add global styles to this file, and also import other style files */
 
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-// @import "assets/variables";
 
 :root {
-    // color
-    --primary-color: #000000;
-    --secondary-color: #D3F2B1;
-    --dark-secondary-color: #92CF53;
-    --field-color: #F3F4F8;
-    --grey-color: #FCFCFC;
-    --dark-grey-color: #75747F;
-    --muted-color: #919598;
-    --hover-color: #F7F7F7;
-    --red-color: #FF7272;
-    --yellow-color: #EDBA36;
-    --orange-color: #FFA800;
-    --blue-color: #2D8EFF;
-    --purple-color: #9747FF;
-    --text-color: #FFFF;
-    --border-color: #D3D3D3;
-    --grey-color-2: #D9D9D9;
-    --grey-color-3: #E5E7F1;
+  --primary-color: #000000;
+  --primary-green-color: #92CF4F;
+  --secondary-color: #D3F2B1;
+  --dark-secondary-color: #92CF53;
+  --field-color: #F3F4F8;
+  --grey-color: #FCFCFC;
+  --dark-grey-color: #75747F;
+  --muted-color: #919598;
+  --hover-color: #F7F7F7;
+  --red-color: #FF7272;
+  --yellow-color: #EDBA36;
+  --orange-color: #FFA800;
+  --blue-color: #2D8EFF;
+  --purple-color: #9747FF;
+  --text-color: #FFFF;
+  --border-color: #D3D3D3;
+  --grey-color-2: #D9D9D9;
+  --grey-color-3: #E5E7F1;
 
-    // other variable
-    --header-height: 66px
+  --header-height: 66px;
 }
 
 html,
@@ -197,16 +192,18 @@ nz-content {
             color: white;
             padding: 0 24px;
             // padding-left: 20px !important;
-            background-color: var(--primary-color);
+            background-color: var(--primary-green-color);
             box-shadow: 2px 2px 18px 0px rgba(216, 252, 177, 0.68);
 
 
             svg>path {
-                stroke: white;
+                stroke: white !important;
+                fill: white !important;
+
 
                 &:is(#fill) {
                     stroke-width: 0.8px;
-                    fill: white;
+                    fill: white !important;
                 }
             }
 
@@ -545,11 +542,6 @@ button.ant-btn {
     }
 }
 
-// .bg-gradient{
-//     background-image: url(./assets/images/bg_gradient.png);
-//     background-size: cover;
-//     background-repeat: no-repeat;
-// }
 
 .mat-dialog-container{
     border-radius: 10px !important;
@@ -584,3 +576,5 @@ button.ant-btn {
         background-color: var(--red-color);
     }
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Inter, sans-serif; }

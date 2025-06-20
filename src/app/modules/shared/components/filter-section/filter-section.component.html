@@ -1,0 +1,30 @@
+<div id="filter-secttion-container" class="flex gap-3 justify-end">
+    <div class="filter-section-header flex justify-end w-full">
+        <ng-content select=".action-left"></ng-content>
+        <ng-content select=".action-right"></ng-content>
+    </div>
+    <div class="flex gap-3 w-full max-w-[30%]">
+        <!-- <div [matMenuTriggerFor]="columnFilter"
+            class="rounded-full cursor-pointer bg-[--field-color] border border-[--field-color] hover:border-[--primary-color]  h-[40px] w-full max-w-[40px] min-w-[40px] flex items-center">
+            <img src="assets/svgs/columns.svg" class="mx-auto w-[14px] h-[14px]">
+        </div> -->
+        <div class="formGroup hidden md:flex min-w-[300px] max-w-full w-full h-[38px]">
+            <nz-input-group [nzSuffix]="suffixIconSearch" class="w-full rounded-full search">
+                <input nz-input type="text" appUniqueNameAttribute name="search" [(ngModel)]="searchText" maxlength="300"
+                placeholder="Search&hellip;" class="bg-white"  #filter/>
+            </nz-input-group>
+            <ng-template #suffixIconSearch>
+                <span nz-icon nzType="search"></span>
+            </ng-template>
+        </div>
+    </div>
+    <mat-menu #columnFilter="matMenu" yPosition="below" xPosition="before">
+        <button class="checkbox-item mat-menu-item" *ngFor="let column of columns"
+            (click)="toggleColumnVisibility(column, $event)">
+            <mat-checkbox [(ngModel)]="column.visible" class="checkbox" #checkbox (click)="$event.stopPropagation()">
+                {{ column.title }}
+            </mat-checkbox>
+        </button>
+    </mat-menu>
+    <ng-content></ng-content>
+</div>

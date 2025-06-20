@@ -1,0 +1,60 @@
+<div class="h-[66px] bg-white border-b-1">
+<div class="flex justify-end gap-3">
+<span><svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="40" height="40" rx="20" fill="#F2F2F2"/>
+<path d="M27 25V19.8C26.5 19.9 26 20 25.5 20H25V26H15V19C15 16.2 17.2 14 20 14C20.1 12.7 20.7 11.6 21.5 10.7C21.2 10.3 20.6 10 20 10C18.9 10 18 10.9 18 12V12.3C15 13.2 13 15.9 13 19V25L11 27V28H29V27L27 25ZM18 29C18 30.1 18.9 31 20 31C21.1 31 22 30.1 22 29H18ZM29 14.5C29 16.4 27.4 18 25.5 18C23.6 18 22 16.4 22 14.5C22 12.6 23.6 11 25.5 11C27.4 11 29 12.6 29 14.5Z" fill="black"/>
+</svg>
+
+</span>
+  <div class="flex justify-end gap-3 border">
+    <a nz-dropdown [nzDropdownMenu]="menu" nzTrigger="click" >
+      Akil Mehar
+<span nz-icon nzType="down" nzTheme="outline"></span>
+    </a>
+
+        <!-- <div class="profileWrap relative flex items-center">
+            <nz-avatar [nzSize]="'large'" [matMenuTriggerFor]="actionMenu" class="cursor-pointer bg-[--text-color] rounded-full p-2" nzSrc="assets/svgs/notification_badge.svg"></nz-avatar>
+        </div> -->
+        <!-- {{fullName}} -->
+      
+        <!-- <div class=" flex items-center" > -->
+            <!-- <nz-avatar [nzSize]="'large'" [matMenuTriggerFor]="actionMenu" class="cursor-pointer bg-[--text-color] rounded-full p-2" ></nz-avatar> -->
+            <!-- <div [matMenuTriggerFor]="actionMenu" class="cursor-pointer icon absolute rounded-full px-0.5">
+                <img src="assets/svgs/downArrow.svg" alt="">
+            </div> -->
+        <!-- </div> -->
+    </div>
+</div>
+</div>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <div nz-menu nzSelectable>
+        <div class="mt-2 flex items-center gap-3 text-black font-normal" mat-menu-item>
+        {{fullName}}
+    </div>
+    <!-- <nz-divider class="m-0"></nz-divider> -->
+    <button class="mt-2 flex items-center gap-3 fg-danger font-medium" (click)="logout()" mat-menu-item>
+        <span>Logout</span>
+        <span nz-icon nzType="arrow-right" nzTheme="outline"></span>
+
+    </button>
+    </div>
+      <!-- <ul nz-menu nzSelectable>
+        <li nz-menu-item>1st menu item</li>
+        <li nz-menu-item>2nd menu item</li>
+        <li nz-menu-item>3rd menu item</li>
+        <li nz-menu-item nzDanger>4th danger item</li>
+      </ul>
+    </nz-dropdown-menu> -->
+
+<mat-menu class="mt-2" #actionMenu="matMenu" class="border !bg-white">
+    <!-- <div class="action-heading">Actions</div> -->
+    <div class="mt-2 flex items-center gap-3 text-black font-normal" mat-menu-item>
+        {{fullName}}
+    </div>
+    <!-- <nz-divider class="m-0"></nz-divider> -->
+    <button class="mt-2 flex items-center gap-3 fg-danger font-medium" (click)="logout()" mat-menu-item>
+        <span>Logout</span>
+        <span nz-icon nzType="arrow-right" nzTheme="outline"></span>
+
+    </button>
+</mat-menu>

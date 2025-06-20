@@ -1,0 +1,14 @@
+<div class="mainWrap break-all">
+    <div class="modalContent text-center p-5">
+        <div class="icon">
+            <img class="mx-auto max-h-[44px]" src="assets/svgs/green_info.svg">
+            <!-- <i nz-icon nzType="info-circle" class="text-[--secondary-color]"></i> -->
+        </div>
+        <div *ngIf="data?.title" class="heading font-medium text-xl mt-4  max-w-[80%] mx-auto" [innerHTML]="data.title"></div>
+        <div *ngIf="data?.message" class="subheading font-normal mt-3.5 mx-auto" [innerHTML]="data.message">  </div>
+        <div class="mt-12 flex justify-center gap-2.5">
+            <button (click)="cancel()" nz-button type="button" class="">No</button>
+            <button (click)="submit()" nz-button type="button" class="button-primary">Yes</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+<div id="pagination" class="flex flex-col items-end p-4">
+    <nz-pagination (nzPageIndexChange)="pageIndexChange($event)" [nzTotal]="pagination.totalElements || 0" [nzPageIndex]="(pagination.page || 0)+1" [nzPageSize]="pagination.size || 0" [nzShowSizeChanger]="true" [nzPageSizeOptions]=" [25,50,75,100]" (nzPageSizeChange)="pageSizeChange($event)" [nzItemRender]="renderItemTemplate"></nz-pagination>
+    <ng-template #renderItemTemplate let-type let-page="page">
+        <ng-container [ngSwitch]="type">
+            <a *ngSwitchCase="'page'">{{ page }}</a>
+            <a *ngSwitchCase="'prev'">Prev</a>
+            <a *ngSwitchCase="'next'">Next</a>
+            <a *ngSwitchCase="'prev_5'"> ... </a>
+            <a *ngSwitchCase="'next_5'"> ... </a>
+        </ng-container>
+    </ng-template>
+</div>
