@@ -1,0 +1,221 @@
+<div id="merchant-detail" class="flex flex-col gap-4">
+    <nz-breadcrumb class="my-[24px]">
+        <nz-breadcrumb-item><a routerLink="/app/dashboard">Home</a></nz-breadcrumb-item>
+        <nz-breadcrumb-item>
+            <a routerLink="/app/super-merchant">Manage Merchant</a>
+        </nz-breadcrumb-item>
+        <nz-breadcrumb-item>Merchant Detail</nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <div *ngIf="!merchant" class="p-5 flex">
+        <i class="text-4xl m-auto" nz-icon nzType="loading"></i>
+    </div>
+
+    <div *ngIf="merchant" class="flex flex-col gap-4 bg-[--text-color] rounded p-8">
+        <nz-collapse class="rounded-md border-b-solid border-b-1 flex flex-col gap-5" nzGhost
+            nzExpandIconPosition="right">
+            <nz-collapse-panel [nzActive]="true" [nzHeader]="'Basic Information'">
+                <div class="bg-[--hover-color] -m-[16px] p-8 rounded-md">
+                    <div class="flex flex-wrap w-full gap-2.5 lg:max-w-[80%]">
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Merchant Name</div>
+                            <div class="font-medium">{{merchant.merchantName || '-'}}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Merchant Code</div>
+                            <div class="font-medium">{{merchant.accountCode || '-'}}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Merchant Profile</div>
+                            <div class="font-medium">{{merchant.merchantProfile || '-'}}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Merchant Category</div>
+                            <div class="font-medium">{{merchant.merchantCategory || '-'}}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Country</div>
+                            <div class="font-medium">{{merchant.countryName || '-'}}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">City</div>
+                            <div class="font-medium">{{merchant.merchantCity || '-'}}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Merchant Status</div>
+                            <div class="font-medium">{{merchant.merchantStatus || '-'}}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Company Registration Date</div>
+                            <div class="font-medium">{{ merchant.companyRegistrationDate}}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Modules View</div>
+                            <div *ngIf="modulesViews" class="font-medium">{{modulesViews}}</div>
+                            <div *ngIf="!modulesViews">No modules assigned</div>
+                        </div>
+                        <div *ngIf="merchant.merchantProfileId == 3"
+                            class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Number of Branches</div>
+                            <div class="font-medium">{{merchant.branchLimit || '-'}}</div>
+                        </div>
+                    </div>
+                </div>
+            </nz-collapse-panel>
+        </nz-collapse>
+
+        <nz-collapse class="rounded-md border-b-solid border-b-1 flex flex-col gap-5" nzGhost
+            nzExpandIconPosition="right">
+            <nz-collapse-panel [nzHeader]="'Contact Information'">
+                <div class="bg-[--hover-color] -m-[16px] p-8 rounded-md">
+                    <div class="flex flex-wrap w-full gap-2.5 lg:max-w-[80%]">
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Merchant Email</div>
+                            <div class="font-medium">{{merchant.merchantEmail || '-'}}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Merchant Phone</div>
+                            <div class="font-medium">{{merchant.merchantPhone || '-'}}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Merchant Address</div>
+                            <div class="font-medium break-all">{{merchant.merchantAddress || '-'}}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Contact Person Name</div>
+                            <div class="font-medium">{{merchant.contactPersonName || '-'}}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Contact Person Phone 1</div>
+                            <div class="font-medium">{{merchant.contactPersonPhone1 || '-'}}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Contact Person Phone 2</div>
+                            <div class="font-medium">{{merchant.contactPersonPhone2 || '-'}}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Contact Person email 1</div>
+                            <div class="font-medium break-all">{{merchant.contactPersonEmail1 || '-'}}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Contact Person email 2</div>
+                            <div class="font-medium break-all">{{merchant.contactPersonEmail2 || '-'}}</div>
+                        </div>
+                    </div>
+                </div>
+            </nz-collapse-panel>
+        </nz-collapse>
+
+        <nz-collapse class="rounded-md border-b-solid border-b-1 flex flex-col gap-5" nzGhost
+            nzExpandIconPosition="right">
+            <nz-collapse-panel [nzHeader]="'Notification Details'">
+                <div class="bg-[--hover-color] -m-[16px] p-8 rounded-md">
+                    <div class="flex flex-wrap w-full gap-2.5 lg:max-w-[80%]">
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Enable SMS</div>
+                            <div class="font-medium">{{
+                                getNotificationStatus(merchant.merchantNotificationResponseDto?.smsEnabled) }}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Enable Email</div>
+                            <div class="font-medium">{{
+                                getNotificationStatus(merchant.merchantNotificationResponseDto?.emailEnabled) }}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">SMS Number 1</div>
+                            <div class="font-medium">{{merchant.merchantNotificationResponseDto?.sms1 || '-'}}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">SMS Number 2</div>
+                            <div class="font-medium">{{merchant.merchantNotificationResponseDto?.sms2 || '-'}}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Email Address 1</div>
+                            <div class="font-medium">{{merchant.merchantNotificationResponseDto?.email1 || '-'}}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Email Address 2</div>
+                            <div class="font-medium">{{merchant.merchantNotificationResponseDto?.email2 || '-'}}</div>
+                        </div>
+                    </div>
+                </div>
+            </nz-collapse-panel>
+        </nz-collapse>
+
+        <nz-collapse class="rounded-md border-b-solid border-b-1 flex flex-col gap-5" nzGhost
+            nzExpandIconPosition="right">
+            <nz-collapse-panel [nzHeader]="'Settlement Details'">
+                <div class="bg-[--hover-color] -m-[16px] p-8 rounded-md">
+                    <div class="flex flex-wrap w-full gap-2.5 lg:max-w-[80%]">
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Bank Name</div>
+                            <div class="font-medium">{{merchant.merchantSettlementDetail?.bankName || '-'}}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Bank Account Title</div>
+                            <div class="font-medium">{{merchant.merchantSettlementDetail?.bankAccountTitle || '-'}}
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Billing Address</div>
+                            <div class="font-medium">{{merchant.merchantSettlementDetail?.ibanNumber || '-'}}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">VAT Number</div>
+                            <div class="font-medium">{{merchant.merchantSettlementDetail?.vatNumber || '-'}}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full">
+                            <div class="text-[--dark-grey-color]">Billing Address</div>
+                            <div class="font-medium">{{merchant.merchantSettlementDetail?.billingAddress || '-'}}</div>
+                        </div>
+                    </div>
+                </div>
+            </nz-collapse-panel>
+        </nz-collapse>
+
+        <nz-collapse class="rounded-md border-b-solid border-b-1 flex flex-col gap-5" nzGhost
+            nzExpandIconPosition="right">
+            <nz-collapse-panel [nzHeader]="'Business Statistics'">
+                <div class="bg-[--hover-color] -m-[16px] p-8 rounded-md">
+                    <div class="flex flex-wrap w-full gap-2.5 lg:max-w-[80%]">
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Minimum Order Value</div>
+                            <div class="font-medium">{{ getFormattedNumber(merchant.minimumOrderValue) }}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Maximum Order Value</div>
+                            <div class="font-medium">{{ getFormattedNumber(merchant.maximumOrderValue) }}</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full lg:w-6/12 lg:max-w-[49%]">
+                            <div class="text-[--dark-grey-color]">Average Monthly Volume (Amount)</div>
+                            <div class="font-medium">{{ getFormattedNumber(merchant.averageMonthlyVolume) }}</div>
+                        </div>
+                    </div>
+                </div>
+            </nz-collapse-panel>
+        </nz-collapse>
+
+        <nz-collapse class="rounded-md border-b-solid border-b-1 flex-col gap-5 hidden" nzGhost
+            nzExpandIconPosition="right">
+            <nz-collapse-panel [nzHeader]="'Control & Integration'">
+                <div class="bg-[--hover-color] -m-[16px] p-8 rounded-md">
+                    <div class="flex flex-wrap w-full gap-2.5 lg:max-w-[80%]">
+                        <div class="flex flex-col gap-1.5 w-full">
+                            <div class="text-[--dark-grey-color]">Email</div>
+                            <div class="font-medium">-</div>
+                        </div>
+                        <div class="flex flex-col gap-1.5 w-full">
+                            <div class="text-[--dark-grey-color]">Integration API Token</div>
+                            <div class="font-medium flex gap-3 items-center">
+                                <span>-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nz-collapse-panel>
+        </nz-collapse>
+        <div class="flex gap-3 mt-4 w-full">
+            <button onclick="history.back()" nz-button type="button" class="">Back</button>
+        </div>
+    </div>
+</div>

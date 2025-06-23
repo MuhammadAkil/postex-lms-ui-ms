@@ -12,9 +12,49 @@ import { MerchantService } from 'src/app/services/merchant.service';
   templateUrl: './merchant-logs.component.html',
   styleUrls: ['./merchant-logs.component.scss']
 })
-
-
 export class MerchantLogsComponent implements OnInit {
+  dummyMerchantData = [
+    {
+      merchantId: 1,
+      merchantName: 'ABC Retailer',
+      lmsId: 'LMS-001',
+      partner: 'Partner A',
+      partnerAccountId: 'ACC-123',
+      merchant: 'ABC Retailer',
+      owner: 'John Doe',
+      type: 'Retail',
+      registrationDate: '2024-01-10',
+      complianceStatus: 'Approved',
+      merchantStatusId: 1
+    },
+    {
+      merchantId: 2,
+      merchantName: 'XYZ Wholesaler',
+      lmsId: 'LMS-002',
+      partner: 'Partner B',
+      partnerAccountId: 'ACC-456',
+      merchant: 'XYZ Wholesaler',
+      owner: 'Jane Smith',
+      type: 'Wholesale',
+      registrationDate: '2023-12-05',
+      complianceStatus: 'Pending',
+      merchantStatusId: 2
+    },
+    {
+      merchantId: 2,
+      merchantName: 'ABC',
+      lmsId: 'LMS-003',
+      partner: 'Partner C',
+      partnerAccountId: 'ACC-456',
+      merchant: 'ABC',
+      owner: 'Jane Smith',
+      type: 'Wholesale',
+      registrationDate: '2023-12-05',
+      complianceStatus: 'Review Requested',
+      merchantStatusId: 2
+    }
+  ];
+
   listOfColumn: ListColumn[] = [
     { title: 'Sr #', property: 'serialNo', visible: true },
     { title: 'LMS ID', property: 'lmsId', visible: true },
@@ -29,11 +69,14 @@ export class MerchantLogsComponent implements OnInit {
   ] as ListColumn[];
   isLoading: boolean = false;
   searchCriteria = new SearchCriteria();
-  pagination: Pagination = { page: 0, size: 25 };
+  pagination: Pagination = {
+    page: 0, size: 25,
+    total: 0
+  };
   merchantDataList: Array<MerchantDto> = [];
-  originalDataList:Array<MerchantDto>=[];
-  filters: FilterObject[] = GetSelectedFilters([ ConstantFilterVariable.merchantName,ConstantFilterVariable.merchantCode])
-
+  originalDataList: Array<MerchantDto> = [];
+  filters: FilterObject[] = GetSelectedFilters([ConstantFilterVariable.merchantName, ConstantFilterVariable.merchantCode]);
+  selectedStatus: string = 'All'; // Default to "All"
 
   constructor(
     private merchantService: MerchantService,
@@ -44,27 +87,47 @@ export class MerchantLogsComponent implements OnInit {
     this.getMerchants();
   }
 
-
   getMerchants() {
-   
-    var filter = { ...this.searchCriteria };
-      filter.page = this.pagination.page;
-      filter.size = this.pagination.size;
-      this.isLoading = true;
-      this.merchantService.getAllMerchant(filter).subscribe(d => {
-      if (d.statusCode?.toString().startsWith("20")) {
-        this.merchantDataList = d.dist || [];
-        this.pagination = d.pagination || this.pagination;
-        this.isLoading = false;
-        this.originalDataList = [...this.merchantDataList]
+    const filter = { ...this.searchCriteria, page: this.pagination.page, size: this.pagination.size };
+    this.isLoading = true;
 
+    this.merchantService.getAllMerchant(filter).subscribe({
+      next: (d) => {
+        if (d.statusCode?.toString().startsWith('20')) {
+          // this.originalDataList = [...d.dist || []];
+          this.filterByStatus(this.selectedStatus); // Apply initial filter
+          this.pagination = d.pagination || this.pagination;
+        } else {
+          this.loadDummyData();
+        }
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+        this.loadDummyData();
       }
-    }, err => {
-      this.isLoading = false;
-    })
+    });
   }
 
-  updateMerchantStatus(merchant: MerchantDto, merchantStatus : number) {
+  loadDummyData() {
+    this.originalDataList = [...this.dummyMerchantData];
+    this.filterByStatus(this.selectedStatus); // Apply filter to dummy data
+    this.pagination.total = this.dummyMerchantData.length;
+  }
+
+  filterByStatus(status: string) {
+    this.selectedStatus = status;
+    if (status === 'All') {
+      this.merchantDataList = [...this.originalDataList];
+    } else {
+      this.merchantDataList = this.originalDataList.filter(merchant =>
+        merchant.complianceStatus === status || (status === 'Pending' && merchant.complianceStatus === 'New Requested')
+      );
+    }
+    this.pagination.total = this.merchantDataList.length;
+  }
+
+  updateMerchantStatus(merchant: MerchantDto, merchantStatus: number) {
     const dialog = this.commonService.confirmation({ message: `Are you sure you want to change status of <b class="inline-block">${merchant.merchantName}</b> to <b>${merchant.merchantStatusId ? 'Inactive' : 'Active'}</b>`, title: "Status Change" });
     dialog?.afterClosed().subscribe((confirmed: any) => {
       if (confirmed) {
@@ -91,30 +154,32 @@ export class MerchantLogsComponent implements OnInit {
     this.getMerchants();
   }
 
-  onFilterChange(value:any){
-    if(!this.merchantDataList){
+  onFilterChange(value: any) {
+    if (!this.originalDataList) {
       return;
     }
-    if(value){
+    if (value) {
       value = value.trim().toLowerCase();
       this.merchantDataList = this.originalDataList.filter((item: any) => {
         for (const prop in item) {
           if (item.hasOwnProperty(prop)) {
             const propValue = item[prop];
-            if(propValue.toString().toLowerCase().includes(value.toString().toLowerCase())){
+            if (propValue?.toString().toLowerCase().includes(value.toString().toLowerCase())) {
               return true;
             }
           }
         }
         return false;
       });
-    }else{
-      this.merchantDataList = [...this.originalDataList]
+    } else {
+      this.merchantDataList = [...this.originalDataList];
     }
+    this.pagination.total = this.merchantDataList.length;
   }
+
   applyFilter(event: any) {
     this.pagination.page = 0;
     this.searchCriteria = event;
-    this.getMerchants()
+    this.getMerchants();
   }
 }

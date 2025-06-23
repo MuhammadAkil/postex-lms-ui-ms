@@ -55,7 +55,7 @@ export interface MerchantNotificationDto {
 
 export interface MerchantDto {
     merchantId: number;
-    merchantName: string;
+    merchantName?: string;
     accountCode?: string;
     merchantCode?: string;
     merchantEmail?: string;

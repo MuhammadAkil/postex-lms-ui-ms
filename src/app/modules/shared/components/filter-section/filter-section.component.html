@@ -1,5 +1,5 @@
-<div id="filter-secttion-container" class="flex gap-3 justify-end">
-    <div class="filter-section-header flex justify-end w-full">
+<div id="filter-secttion-container" class="flex gap-3 justify-start">
+    <div class="filter-section-header flex ">
         <ng-content select=".action-left"></ng-content>
         <ng-content select=".action-right"></ng-content>
     </div>
@@ -8,7 +8,7 @@
             class="rounded-full cursor-pointer bg-[--field-color] border border-[--field-color] hover:border-[--primary-color]  h-[40px] w-full max-w-[40px] min-w-[40px] flex items-center">
             <img src="assets/svgs/columns.svg" class="mx-auto w-[14px] h-[14px]">
         </div> -->
-        <div class="formGroup hidden md:flex min-w-[300px] max-w-full w-full h-[38px]">
+        <div class="formGroup hidden md:flex max-w-[260px] !border-[#C4C4C4] !rounded-lg w-full h-[38px]">
             <nz-input-group [nzSuffix]="suffixIconSearch" class="w-full rounded-full search">
                 <input nz-input type="text" appUniqueNameAttribute name="search" [(ngModel)]="searchText" maxlength="300"
                 placeholder="Search&hellip;" class="bg-white"  #filter/>

@@ -83,6 +83,7 @@ export class CreateMerchantComponent {
   ];
 
   merchantForm!: FormGroup;
+  dynamicFields: { label: string, value: string }[] = [];
 
   constructor(private fb: FormBuilder) {
     this.createForm();
@@ -103,6 +104,8 @@ export class CreateMerchantComponent {
         stateProvince: [null, [Validators.required]],
         cityId: [null, [Validators.required]],
         businessAddress: [null, [Validators.required, Validators.maxLength(500)]],
+        dynamicFields: [[]],
+        newField: [null], // Added new field
       }),
       contactInformation: this.fb.group({
         contactPersonName: [null, [Validators.required, Validators.maxLength(128)]],
@@ -263,5 +266,19 @@ export class CreateMerchantComponent {
     this.passwordValidation.number = /[0-9]/.test(value) ? true : false;
     this.passwordValidation.upperCase = /[A-Z]/.test(value) ? true : false;
     this.passwordValidation.lowerCase = /[a-z]/.test(value) ? true : false;
+  }
+
+  addNewField() {
+    this.dynamicFields.push({ label: '', value: '' });
+    this.basicInformation.controls['dynamicFields'].setValue(this.dynamicFields);
+  }
+
+  removeField(index: number) {
+    this.dynamicFields.splice(index, 1);
+    this.basicInformation.controls['dynamicFields'].setValue(this.dynamicFields);
+  }
+
+  updateFieldValue(index: number) {
+    this.basicInformation.controls['dynamicFields'].setValue(this.dynamicFields);
   }
 }

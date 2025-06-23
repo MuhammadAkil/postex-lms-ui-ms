@@ -14,11 +14,15 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { SharedModule } from '../shared/shared.module';
 import { MatMenuModule } from '@angular/material/menu';
+import { ViewDetailComponent } from './view-detail/view-detail.component';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+
 
 const routes: Routes = [
   { path: '', redirectTo: 'logs', pathMatch: 'full' },
   { path: 'create', component: CreateMerchantComponent, data: { breadcrumb: 'Create Merchant' } },
-  { path: 'edit', component: CreateMerchantComponent, data: { breadcrumb: 'Edit Merchant' } },
+  { path: 'edit/:merchantId', component: CreateMerchantComponent, data: { breadcrumb: 'Edit Merchant' } },
+  { path: "detail/:merchantId", component: ViewDetailComponent },
   { path: 'logs', component: MerchantLogsComponent, data: { breadcrumb: 'Merchant Logs' } }
 ];
 
@@ -27,7 +31,7 @@ const routes: Routes = [
   declarations: [
     MerchantLogsComponent,
     CreateMerchantComponent,
-
+    ViewDetailComponent
 
   ],
  imports: [
@@ -48,6 +52,7 @@ const routes: Routes = [
     SharedModule,
     MatMenuModule,
     NzButtonModule,
+    NzCollapseModule,
     RouterModule.forChild(routes)
   ],
   exports: [RouterModule]

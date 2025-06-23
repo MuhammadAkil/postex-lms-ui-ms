@@ -54,42 +54,53 @@ export interface MerchantNotificationDto {
 
 
 export interface MerchantDto {
-    merchantId: number;
-    merchantName: string;
-    accountCode?: string;
-    merchantCode?: string;
-    merchantEmail?: string;
-    logoUrl?: string;
-    merchantPhone?: string;
-    merchantStatusId?: number;
-    merchantStatus?: string;
-    companyRegistrationDate?: string;
-    merchantAddress?: string;
-    merchantCategoryId?: number;
-    merchantCategory?: string;
-    contactPersonName?: string;
-    contactPersonPhone1?: string;
-    contactPersonPhone2?: string;
-    contactPersonEmail1?: string;
-    contactPersonEmail2?: string;
-    companyRegistrationNumber?: string;
-    merchantCityId?: number;
-    merchantCity?: string;
-    countryId?: number;
-    countryName?: string;
-    minimumOrderValue?: number;
-    maximumOrderValue?: number;
-    averageMonthlyVolume?: number;
-    merchantNotificationResponseDto?: MerchantNotificationDto;
-    merchantSettlementDetail?: SettlementDetailDto;
-    userDetails?: MerchantUserDto;
-    assignedModules?: Array<{ moduleName: string, moduleId:number}>;
-    merchantProfileId?: number;
-    transactionProcessing?: string;
-    merchantProfile?: string;
-    branchLimit?:number;
-    [key: string]: any;
+  merchantId: number;
+  merchantName: string;
+
+  lmsId?: string;                     
+  partner?: string;                   // For Partner Name
+  partnerAccountId?: string;         // For Partner Account ID
+  merchant?: string;                 // For Merchant display name
+  owner?: string;                    // For Owner name
+  type?: string;                     // For merchant type (Retail, Wholesale, etc.)
+  registrationDate?: string;         // For Registration Date (formatted string)
+  complianceStatus?: string;         // For Compliance Status (e.g., Approved, Pending)
+  accountCode?: string;
+  merchantCode?: string;
+  merchantEmail?: string;
+  logoUrl?: string;
+  merchantPhone?: string;
+  merchantStatusId?: number;
+  merchantStatus?: string;
+  companyRegistrationDate?: string;
+  merchantAddress?: string;
+  merchantCategoryId?: number;
+  merchantCategory?: string;
+  contactPersonName?: string;
+  contactPersonPhone1?: string;
+  contactPersonPhone2?: string;
+  contactPersonEmail1?: string;
+  contactPersonEmail2?: string;
+  companyRegistrationNumber?: string;
+  merchantCityId?: number;
+  merchantCity?: string;
+  countryId?: number;
+  countryName?: string;
+  minimumOrderValue?: number;
+  maximumOrderValue?: number;
+  averageMonthlyVolume?: number;
+  merchantNotificationResponseDto?: MerchantNotificationDto;
+  merchantSettlementDetail?: SettlementDetailDto;
+  userDetails?: MerchantUserDto;
+  assignedModules?: Array<{ moduleName: string; moduleId: number }>;
+  merchantProfileId?: number;
+  transactionProcessing?: string;
+  merchantProfile?: string;
+  branchLimit?: number;
+
+  [key: string]: any;
 }
+
 
 export interface MerchantBasicInformation {
     assignedModuleIds?: Array<number>;

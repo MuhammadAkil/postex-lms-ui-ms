@@ -1,3 +1,44 @@
+$approved-border: #92CF4F;
+$approved-bg: #F6FFEE;
+$pending-border: #679CE0;
+$pending-bg: #EAF3FF;
+$review-border: #9747FF;
+$review-bg: #F2E8FF;
+
+.status {
+  display: inline-block;
+  border-radius: 4px;
+  // max-height: 22px;
+  text-align: center;
+  font-weight: 400;
+  font-size: 12px;
+  text-transform: capitalize;
+  width: max-content;
+  &::before{
+    padding-right: 0 !important;
+    right: 0 !important;
+    content: none !important;
+  }
+}
+
+.status-approved {
+  border: 1px solid $approved-border;
+  color: $approved-border;
+  background-color: $approved-bg;
+}
+
+.status-pending {
+  border: 1px solid $pending-border;
+  color: $pending-border;
+  background-color: $pending-bg;
+}
+
+.status-review {
+  border: 1px solid $review-border;
+  color: $review-border;
+  background-color: $review-bg;
+}
+
 .actionWrap {
   padding: 16px;
   background-color: #fff;
@@ -34,4 +75,32 @@ nz-table {
   td {
     color: #2c2c2c;
   }
+}
+.status{
+    width: max-content !important;
+}
+.ant-table-tbody > tr > td{
+    word-break: break-word !important;
+    max-width: 130px !important;
+}
+.statusTabs{
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: #000000; 
+  min-height: 36px;
+}
+
+.bg-black {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+.btn-border {
+  border: #C4C4C4 1px solid !important ;
+  color: #75747F !important;
+}
 }

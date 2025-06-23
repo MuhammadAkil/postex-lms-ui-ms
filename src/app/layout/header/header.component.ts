@@ -4,14 +4,14 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
     fullName: string = "Akil Mehar";
-    constructor(
-        private authService: AuthService,
-        
-    ) {}
+    isDropdownOpen = false;
+
+    constructor(private authService: AuthService) {}
+
  logout() {
         this.authService.logout();
     }

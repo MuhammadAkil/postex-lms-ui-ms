@@ -282,6 +282,9 @@ nz-content {
     }
 }
 
+.ant-input-affix-wrapper{
+    border-radius: 8px !important;
+}
 
 .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
     border-color: inherit;

@@ -34,7 +34,6 @@
   />
   {{ step.name }}
 </div>
-
     </div>
 
     <!-- Menu Content -->
@@ -127,6 +126,23 @@
           <input nz-input type="text" maxlength="500" formControlName="businessAddress" placeholder="Enter Business Address" class="w-full p-2 mt-2 rounded-md" />
         </div>
       </div>
+      <div class="formGroup flex items-center gap-4">
+        <div class="w-1/2"></div>
+        <div class="w-1/2">
+          <a (click)="addNewField()" class="text-blue-500 underline cursor-pointer">Add New Field</a>
+          <div *ngFor="let field of dynamicFields; let i = index" class="mt-4">
+            <div class="flex flex-col">
+              <label class="font-normal text-sm">Field Label</label>
+              <input nz-input type="text" [(ngModel)]="field.label" (ngModelChange)="updateFieldValue(i)" placeholder="Enter Field Label" class="w-full p-2 mt-2 rounded-md bg-gray-100" />
+            </div>
+            <div class="flex flex-col mt-2">
+              <label class="font-normal text-sm">Enter Field Value</label>
+              <input nz-input type="text" [(ngModel)]="field.value" placeholder="Enter Field Value" class="w-full p-2 mt-2 rounded-md bg-gray-100" />
+            </div>
+            <button (click)="removeField(i)" nz-button type="button" class="btn btn-outline mt-2">Remove</button>
+          </div>
+        </div>
+      </div>
       <div class="flex gap-3 mt-4">
         <button (click)="currentStep = currentStep - 1" nz-button type="button" class="btn btn-outline" [disabled]="currentStep === 1">Close</button>
         <button (click)="incrementStep(basicInformation)" nz-button type="button" class="btn btn-primary">Next</button>
@@ -162,9 +178,7 @@
       <div class="formGroup flex items-center gap-4">
         <div class="w-1/2">
           <label class="font-normal text-sm">Date of Birth</label>
-          <!-- <nz-date-picker nzFormat="dd-MM-yyyy" [nzDisabledDate]="disabledFutureDate" class="w-full p-2 mt-2 rounded-md" formControlName="dateOfBirth"></nz-date-picker> -->
           <nz-date-picker class="w-full p-2 mt-3 rounded-md" [nzFormat]="'dd-MM-yyyy'" [nzDisabledDate]="disabledFutureDate" [nzInputReadOnly]="true" formControlName="dateOfBirth"></nz-date-picker>
-
         </div>
         <div class="w-1/2">
           <label class="font-normal text-sm">Upload Selfie</label>
