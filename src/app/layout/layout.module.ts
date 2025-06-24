@@ -32,6 +32,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'merchant', loadChildren: () => import('../modules/merchant-management/merchant.module').then(m => m.MerchantModule)},
+      { path: 'role-management', loadChildren: () => import('../modules/role-management/role-management.module').then(m => m.RoleManagementModule)},
     ]
   }
 ];

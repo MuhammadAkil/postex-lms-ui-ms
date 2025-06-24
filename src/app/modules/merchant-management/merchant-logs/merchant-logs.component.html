@@ -7,7 +7,8 @@
         <app-filter-section (filterChange)="onFilterChange($event)" [columns]="listOfColumn">
             <div class="action-right flex gap-2">
                 <div class="flex gap-3">
-                    <app-filter-search [filters]="filters" (onSubmitEvent)="applyFilter($event)"></app-filter-search>
+                    <!-- <app-filter-search [filters]="filters" (onSubmitEvent)="applyFilter($event)"></app-filter-search> -->
+                    <app-filter-search [filters]="filters"></app-filter-search>
                 </div>
             </div>
         </app-filter-section>
@@ -47,8 +48,7 @@
                                 <ng-container [ngSwitch]="column.property">
                                     <td *ngSwitchCase="'serialNo'">{{i + 1}}</td>
                                     <td *ngSwitchCase="'complianceStatus'">
-                                        <span class="status " 
-                                        [ngClass]="{'status-approved': data.complianceStatus === 'Approved',
+                                        <span class="status " [ngClass]="{'status-approved': data.complianceStatus === 'Approved',
                                         'status-pending': data.complianceStatus === 'Pending',
                                         'status-review': data.complianceStatus === 'Review Requested'}">
                                             {{ data.complianceStatus || '-' }}
@@ -58,27 +58,37 @@
                                     <td *ngSwitchCase="'action'">
                                         <img [matMenuTriggerFor]="actionMenu" src="assets/svgs/more_action.svg"
                                             class="h-[28px] w-[28px] !border !border-solid rounded-full hover:border-[--primary-color] cursor-pointer">
-                                        <mat-menu class="mt-2" #actionMenu="matMenu">
-                                            <div (click)="$event.stopPropagation()" class="action-label">Actions</div>
-                                            <button [routerLink]="['/app/merchant/detail', data.merchantId]"
-                                                class="mt-2 flex items-center gap-3 fg-danger" mat-menu-item>
-                                                <img src="assets/svgs/view_merchant_icon.svg">
-                                                <span>View Details</span>
-                                            </button>
-                                            <button [routerLink]="['/app/merchant/edit', data.merchantId]"
-                                                class="mt-2 flex items-center gap-3 fg-danger" mat-menu-item>
-                                                <i class="text-[--dark-secondary-color]" nz-icon nzTheme="outline"
-                                                    nzType="edit"></i>
-                                                <span>Edit Merchant</span>
-                                            </button>
-                                            <button
-                                                (click)="updateMerchantStatus(data, data.merchantStatusId === 1 ? 2 : 1)"
-                                                class="mt-2 flex items-center gap-3 fg-danger" mat-menu-item>
-                                                <i class="text-[--dark-secondary-color]" nz-icon nzTheme="outline"
-                                                    nzType="interaction"></i>
-                                                <span>{{ data.merchantStatusId === 1 ? 'Inactive' : 'Active' }}</span>
-                                            </button>
+                                        <mat-menu class="custom-action-menu" #actionMenu="matMenu">
+                                            <!-- Label -->
+                                            <div (click)="$event.stopPropagation()" class="menu-label">Actions</div>
+                                            <div class="menu-divider"></div>
+
+                                          <!-- View Details -->
+<button
+  class="action-btn"
+  [routerLink]="['/app/merchant/detail', data.merchantId]">
+  <img src="assets/svgs/view_merchant_icon.svg" class="icon" />
+  <span>View Details</span>
+</button>
+
+<!-- Edit Merchant -->
+<button
+  class="action-btn"
+  [routerLink]="['/app/merchant/edit', data.merchantId]">
+  <img src="assets/svgs/edit_merchant_icon.svg" class="icon" />
+  <span>Edit Merchant</span>
+</button>
+
+<!-- View Review -->
+<button
+  class="action-btn"
+  (click)="updateMerchantStatus(data, data.merchantStatusId === 1 ? 2 : 1)">
+  <img src="assets/svgs/view-review-icon.svg" class="icon" />
+  <span>View Review</span>
+</button>
+
                                         </mat-menu>
+
                                     </td>
                                     <td *ngSwitchDefault>{{ data[column.property] || '-' }}</td>
                                 </ng-container>

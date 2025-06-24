@@ -16,6 +16,7 @@ import { SharedModule } from '../shared/shared.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { ViewDetailComponent } from './view-detail/view-detail.component';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 
 
 const routes: Routes = [
@@ -50,6 +51,7 @@ const routes: Routes = [
     NzBreadCrumbModule,
     NzSelectModule,
     SharedModule,
+    NzPaginationModule,
     MatMenuModule,
     NzButtonModule,
     NzCollapseModule,

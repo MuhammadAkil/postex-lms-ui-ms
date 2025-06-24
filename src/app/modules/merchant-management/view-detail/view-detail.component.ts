@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MerchantDto } from 'src/app/constant/interface/merchant.interface';
-import { LookupService } from 'src/app/services/lookup.service';
 import { MerchantService } from 'src/app/services/merchant.service';
 
 @Component({
@@ -12,64 +11,42 @@ import { MerchantService } from 'src/app/services/merchant.service';
 export class ViewDetailComponent implements OnInit {
   merchantId: number = Number.NaN;
   merchant!: MerchantDto;
-  moduleList: any[] = [];
-  modulesViews: string = "";
+  modulesViews: string = '';
+  data: any;
+  complianceStatuses: { label: string; value: string; class: string }[] = [
+  { label: 'Approved', value: 'Approved', class: 'status-approved' },
+  { label: 'Pending', value: 'Pending', class: 'status-pending' },
+  { label: 'Review Requested', value: 'Review Requested', class: 'status-review' }
+];
 
-  // Dummy data to be used if API fails or no data is returned
-  private dummyMerchant: MerchantDto = {
-    merchantName: 'ABC Retail Store',
-    accountCode: 'MRC-12345',
-    merchantProfile: 'Standard',
-    merchantCategory: 'Retail',
-    countryName: 'Pakistan',
-    merchantCity: 'Karachi',
-    merchantStatus: 'Active',
-    companyRegistrationDate: '2023-05-15',
-    merchantEmail: 'contact@abcretail.com',
-    merchantPhone: '+92-321-1234567',
-    merchantAddress: '123 Commercial Lane, Karachi, Pakistan',
-    contactPersonName: 'Ali Khan',
-    contactPersonPhone1: '+92-321-1234567',
-    contactPersonPhone2: '+92-322-7654321',
-    contactPersonEmail1: 'ali.khan@abcretail.com',
-    contactPersonEmail2: 'support@abcretail.com',
-    merchantNotificationResponseDto: {
-      smsEnabled: true,
-      emailEnabled: true,
-      sms1: '+92-321-1234567',
-      sms2: '+92-322-7654321',
-      email1: 'contact@abcretail.com',
-      email2: 'support@abcretail.com',
-    },
-    merchantSettlementDetail: {
-      bankName: 'HBL Bank',
-      bankAccountTitle: 'ABC Retail Store Account',
-      ibanNumber: 'PK12HBLB1234567890123456',
-      vatNumber: 'VAT-987654321',
-      billingAddress: '123 Billing Street, Karachi, Pakistan',
-    },
-    minimumOrderValue: 1000.50,
-    maximumOrderValue: 50000.75,
-    averageMonthlyVolume: 250000.00,
-    merchantProfileId: 3, // To show Number of Branches
-    branchLimit: 5,
-    assignedModules: [
-      {
-        moduleName: 'Sales',
-        moduleId: 0
-      },
-      {
-        moduleName: 'Inventory',
-        moduleId: 2
-      },
-    ],
-    merchantId: 0
-  };
+
+
+  basicFields: { label: string; value: string }[] = [];
+  ownerDetails: { label: string; value: string }[] = [];
+  bankDetails: { label: string; value: string }[] = [];
+
+  ownerAttachments = [
+    { name: 'Selfie', date: '2023-01-15', file: 'Incorporation Certificate.jpeg' },
+    { name: 'CNIC Front', date: '2023-01-15', file: 'Incorporation Certificate.jpeg' },
+    { name: 'CNIC Back', date: '2023-01-15', file: 'Incorporation Certificate.jpeg' }
+  ];
+
+  documents = [
+    { name: 'NTN Certificate', date: '2023-01-15', file: 'Incorporation Certificate.jpeg' },
+    { name: 'Incorporation Certificate', date: '2023-01-15', file: 'Incorporation Certificate.jpeg' },
+    { name: 'Bank Statement', date: '2023-01-15', file: 'Incorporation Certificate.jpeg' },
+    { name: 'Authority Letter', date: '2023-01-15', file: 'Incorporation Certificate.jpeg' },
+    { name: 'Board Resolution / Proprietorship Declaration', date: '2023-01-15', file: 'Incorporation Certificate.jpeg' },
+    { name: 'Utility Bill Pictures', date: '2023-01-15', file: 'Incorporation Certificate.jpeg' },
+    { name: 'Past Purchase Orders', date: '2023-01-15', file: 'Incorporation Certificate.jpeg' },
+    { name: 'Past Invoices', date: '2023-01-15', file: 'Incorporation Certificate.jpeg' },
+    { name: 'Business Image/Logo', date: '2023-01-15', file: 'Incorporation Certificate.jpeg' },
+    { name: 'Collateral', date: '2023-01-15', file: 'Incorporation Certificate.jpeg' }
+  ];
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private merchantService: MerchantService,
-    private lookupService: LookupService,
+    private merchantService: MerchantService
   ) {
     this.activatedRoute.params.subscribe(params => {
       if (params['merchantId']) {
@@ -81,40 +58,105 @@ export class ViewDetailComponent implements OnInit {
   ngOnInit(): void {
     if (!isNaN(this.merchantId) && this.merchantId) {
       this.getMerchantDetail();
-    } else {
-      // If merchantId is invalid, use dummy data
-      this.merchant = this.dummyMerchant;
-      this.modulesViews = this.merchant.assignedModules?.map(e => e.moduleName).join(", ") || "";
     }
   }
-// Method to handle date formatting with fallback
-  getFormattedDate(date: Date | undefined): string {
-    return date ? new Date(date).toLocaleDateString() : '-';
-  }
-getNotificationStatus(enabled: boolean | undefined): string {
-    return enabled !== undefined ? (enabled ? 'Yes' : 'No') : '-';
-  }
-  // Method to handle number formatting with fallback
-  getFormattedNumber(value: number | undefined): string {
-    return value !== undefined ? new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value) : '-';
-  }
+
   getMerchantDetail() {
-    this.merchantService.getMerchantDetail(this.merchantId).subscribe({
-      next: (d) => {
-        if (d.statusCode?.toString().startsWith('20') && d.dist) {
-          this.merchant = d.dist[0];
-          this.modulesViews = this.merchant.assignedModules?.map(e => e.moduleName).join(", ") || "";
-        } else {
-          // Use dummy data if API response is not successful
-          this.merchant = this.dummyMerchant;
-          this.modulesViews = this.dummyMerchant.assignedModules?.map(e => e.moduleName).join(", ") || "";
-        }
-      },
-      error: () => {
-        // Use dummy data if API call fails
-        this.merchant = this.dummyMerchant;
-        this.modulesViews = this.dummyMerchant.assignedModules?.map(e => e.moduleName).join(", ") || "";
-      },
+    this.merchantService.getMerchantDetail(this.merchantId).subscribe(d => {
+      if (d.statusCode?.toString().startsWith('20') && d.dist?.length) {
+        this.merchant = d.dist[0];
+      } else {
+        this.setDummyData();
+      }
+      this.populateFields();
+    }, error => {
+      this.setDummyData();
+      this.populateFields();
     });
+  }
+  getComplianceClass(status: string | undefined): string {
+  return (
+    this.complianceStatuses.find(s => s.value === status)?.class || ''
+  );
+}
+
+  getComplianceStatusClass(status: string | undefined): string {
+  switch (status) {
+    case 'Approved':
+      return 'status-approved';
+    case 'Pending':
+      return 'status-pending';
+    case 'Review Requested':
+      return 'status-review';
+    default:
+      return '';
+  }
+}
+
+
+  setDummyData() {
+    this.merchant = {
+      merchantName: 'Sapphire',
+      accountCode: '2114',
+      merchantProfile: 'Logistics',
+      merchantCategory: 'Normal',
+      countryName: 'Pakistan',
+      merchantCity: 'Lahore',
+      merchantStatus: 'Pending',
+      companyRegistrationDate: new Date(),
+      merchantEmail: 'sample@example.com',
+      merchantPhone: '+92-300-1234567',
+      merchantAddress: '57 Commercial Area, Expansion Colony, Ground, Lahore, 54610, Pakistan',
+      contactPersonName: 'Kiran Ali',
+      contactPersonPhone1: '',
+      contactPersonPhone2: '',
+      contactPersonEmail1: '',
+      contactPersonEmail2: '',
+      merchantNotificationResponseDto: {},
+      merchantSettlementDetail: {
+        bankName: 'Logistics',
+        bankAccountTitle: 'Limited',
+        ibanNumber: 'IBAN',
+        vatNumber: '',
+        billingAddress: '',
+      },
+      minimumOrderValue: 0,
+      maximumOrderValue: 0,
+      averageMonthlyVolume: 0,
+      merchantProfileId: 3,
+      branchLimit: 0,
+      assignedModules: [],
+      merchantId: 0
+    } as unknown as MerchantDto;
+  }
+
+  populateFields() {
+    this.basicFields = [
+      { label: 'Platform', value: this.merchant.merchantProfile|| '-'},
+      { label: 'Business Type', value: 'Limited' },
+      { label: 'Country', value: this.merchant.countryName|| '-'},
+      { label: 'State/Province', value: 'Punjab' },
+      { label: 'Industry', value: this.merchant.merchantCategory || '-'},
+      { label: 'Business Registration Number', value: this.merchant.accountCode || '-'},
+      { label: 'City', value: this.merchant.merchantCity|| '-' },
+      { label: 'Business Address', value: this.merchant.merchantAddress|| '-' },
+      { label: 'New Field', value: 'Sample New Field Data' },
+    ];
+
+    this.ownerDetails = [
+      { label: 'Full Name', value: 'Nomral' },
+      { label: 'Email', value: 'Saudi Arabia' },
+      { label: 'CNIC/Passport Number', value: 'Normal' },
+      { label: 'CNIC/Passport Number', value: 'Normal' },
+      { label: 'Contact Number', value: 'Kiran Ali' },
+      { label: 'Date of Birth', value: 'Kiran Ali' },
+    ];
+
+    this.bankDetails = [
+      { label: 'Bank Name', value: this.merchant.merchantSettlementDetail?.bankName || '-' },
+      { label: 'Account Title', value: this.merchant.merchantSettlementDetail?.bankAccountTitle || '-' },
+      { label: 'Account Number', value: this.merchant.accountCode|| '-' },
+      { label: 'IBAN', value: this.merchant.merchantSettlementDetail?.ibanNumber || '-' },
+    ];
   }
 }

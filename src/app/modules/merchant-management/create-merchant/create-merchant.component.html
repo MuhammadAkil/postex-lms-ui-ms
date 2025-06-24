@@ -83,7 +83,7 @@
         </div>
         <div class="w-1/2">
           <label class="font-normal text-sm">Business Type</label>
-          <nz-select nzShowSearch class="w-full mt-2 rounded-md" formControlName="businessType" nzPlaceHolder="Select Business Type">
+          <nz-select nzShowSearch class="w-full mt-2 rounded-md border" formControlName="businessType" nzPlaceHolder="Select Business Type">
             <nz-option *ngFor="let type of dummyBusinessTypeList" [nzLabel]="type.name" [nzValue]="type.id"></nz-option>
           </nz-select>
         </div>
@@ -91,7 +91,7 @@
       <div class="formGroup flex items-center gap-4">
         <div class="w-1/2">
           <label class="font-normal text-sm">Business Registration Number</label>
-          <input nz-input type="text" maxlength="100" formControlName="businessRegistrationNumber" placeholder="Enter Business Registration Number" class="w-full p-2 mt-2 rounded-md" />
+          <input nz-input type="text" maxlength="100" formControlName="businessRegistrationNumber" placeholder="Enter Business Registration Number" class="w-full p-2 mt-2 rounded-md border-2" />
         </div>
         <div class="w-1/2">
           <label class="font-normal text-sm">Industry</label>
