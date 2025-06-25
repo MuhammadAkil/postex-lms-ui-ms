@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ResponseDTO } from '../constant/interface/responseDTO.interface';
-import { Bank, Country, DeliveryCity, MerchantCategory, MerchantLookup, Module, Profile } from '../constant/interface/lookup.interface';
+import { Bank, BusinessType, City, Country, DeliveryCity, Industry, MerchantCategory, MerchantLookup, Module, Partner, Platform, Profile, State } from '../constant/interface/lookup.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +12,26 @@ export class LookupService {
   constructor(private http:HttpClient) { }
 
   getCountryList(): Observable<ResponseDTO<Array<Country>>>{
-    return this.http.get(`/lookup/countries`,{});
+    return this.http.get(`/lookup/country`,{});
+  }
+  getBusinessTypeList(): Observable<ResponseDTO<Array<BusinessType>>>{
+    return this.http.get(`/lookup/business-type`,{});
+  }
+  getIndustryList(): Observable<ResponseDTO<Array<Industry>>>{
+    return this.http.get(`/lookup/industry`,{});
+  }
+  getPartnerList(): Observable<ResponseDTO<Array<Partner>>>{
+    return this.http.get(`/lookup/partner`,{});
+  }
+  getPlatformList(): Observable<ResponseDTO<Array<Platform>>>{
+    return this.http.get(`/lookup/platform`,{});
   }
 
-  getCityList(countryId?: number): Observable<ResponseDTO<Array<DeliveryCity>>>{
-    return this.http.get(`/lookup/cities`,{params:{countryId:countryId || ''}});
+  getStateList(countryId?: number): Observable<ResponseDTO<Array<State>>>{
+    return this.http.get(`/lookup/state`,{params:{countryId:countryId || ''}});
+  }
+  getCityList(stateId?: number): Observable<ResponseDTO<Array<City>>>{
+    return this.http.get(`/lookup/city`,{params:{stateId:stateId || ''}});
   }
 
   getMerchantCategory(): Observable<ResponseDTO<Array<MerchantCategory>>> {

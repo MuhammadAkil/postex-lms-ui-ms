@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ResponseDTO } from '../constant/interface/responseDTO.interface';
 import { Observable } from 'rxjs/internal/Observable';
-import { BusinessStatistics, MerchantBasicInformation, MerchantContactInformation, MerchantDto, MerchantFormDto, MerchantNotificationDto, MerchantUserDto, SettlementDetailDto } from '../constant/interface/merchant.interface';
+import { MerchantBasicInformation, MerchantDto, MerchantFormDto, BankDetailsDto } from '../constant/interface/merchant.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -27,25 +27,25 @@ export class MerchantService {
     return this.http.patch(`/merchant/${merchantId}/basic-info`, basicInfo, {});
   }
 
-  updateContactInformation(merchantId: number, contactInfo: MerchantContactInformation): Observable<ResponseDTO<any>> {
-    return this.http.patch(`/merchant/${merchantId}/contact-info`, contactInfo, {});
-  }
+  // updateContactInformation(merchantId: number, contactInfo: MerchantContactInformation): Observable<ResponseDTO<any>> {
+  //   return this.http.patch(`/merchant/${merchantId}/contact-info`, contactInfo, {});
+  // }
 
-  updateBusinessStatistics(merchantId: number, businessStatistics: BusinessStatistics): Observable<ResponseDTO<any>> {
-    return this.http.patch(`/merchant/${merchantId}/business-statics`, businessStatistics, {});
-  }
+  // updateBusinessStatistics(merchantId: number, businessStatistics: BusinessStatistics): Observable<ResponseDTO<any>> {
+  //   return this.http.patch(`/merchant/${merchantId}/business-statics`, businessStatistics, {});
+  // }
 
-  updateNotificationDetails(merchantId: number, notificationInfo: MerchantNotificationDto): Observable<ResponseDTO<any>> {
-    return this.http.patch(`/merchant/${merchantId}/notification-info`, notificationInfo, {});
-  }
+  // updateNotificationDetails(merchantId: number, notificationInfo: MerchantNotificationDto): Observable<ResponseDTO<any>> {
+  //   return this.http.patch(`/merchant/${merchantId}/notification-info`, notificationInfo, {});
+  // }
 
-  updateSettlementDetail(merchantId: number, settlementDetail: SettlementDetailDto): Observable<ResponseDTO<any>> {
+  updateSettlementDetail(merchantId: number, settlementDetail: BankDetailsDto): Observable<ResponseDTO<any>> {
     return this.http.patch(`/merchant/${merchantId}/settlement-detail`, settlementDetail, {});
   }
 
-  updateAccessControl(merchantId: number, userInfo: MerchantUserDto): Observable<ResponseDTO<any>> {
-    return this.http.patch(`/merchant/${merchantId}/access-control`, userInfo, {});
-  }
+  // updateAccessControl(merchantId: number, userInfo: MerchantUserDto): Observable<ResponseDTO<any>> {
+  //   return this.http.patch(`/merchant/${merchantId}/access-control`, userInfo, {});
+  // }
 
   changeMerchantStatus(merchantId: number, status: number): Observable<ResponseDTO<any>> {
     return this.http.patch(`/merchant/${merchantId}/updateStatus`, { 'merchantStatus' :status});

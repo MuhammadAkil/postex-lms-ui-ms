@@ -132,14 +132,14 @@ export class ViewDetailComponent implements OnInit {
 
   populateFields() {
     this.basicFields = [
-      { label: 'Platform', value: this.merchant.merchantProfile|| '-'},
+      { label: 'Platform', value: this.merchant['merchantProfile']|| '-'},
       { label: 'Business Type', value: 'Limited' },
-      { label: 'Country', value: this.merchant.countryName|| '-'},
+      { label: 'Country', value: this.merchant['countryName']|| '-'},
       { label: 'State/Province', value: 'Punjab' },
-      { label: 'Industry', value: this.merchant.merchantCategory || '-'},
-      { label: 'Business Registration Number', value: this.merchant.accountCode || '-'},
-      { label: 'City', value: this.merchant.merchantCity|| '-' },
-      { label: 'Business Address', value: this.merchant.merchantAddress|| '-' },
+      { label: 'Industry', value: this.merchant['merchantCategory'] || '-'},
+      { label: 'Business Registration Number', value: this.merchant['accountCode'] || '-'},
+      { label: 'City', value: this.merchant['merchantCity']|| '-' },
+      { label: 'Business Address', value: this.merchant['merchantAddress']|| '-' },
       { label: 'New Field', value: 'Sample New Field Data' },
     ];
 
@@ -153,10 +153,10 @@ export class ViewDetailComponent implements OnInit {
     ];
 
     this.bankDetails = [
-      { label: 'Bank Name', value: this.merchant.merchantSettlementDetail?.bankName || '-' },
-      { label: 'Account Title', value: this.merchant.merchantSettlementDetail?.bankAccountTitle || '-' },
-      { label: 'Account Number', value: this.merchant.accountCode|| '-' },
-      { label: 'IBAN', value: this.merchant.merchantSettlementDetail?.ibanNumber || '-' },
+      { label: 'Bank Name', value: this.merchant.bankDetails?.bankName || '-' },
+      { label: 'Account Title', value: this.merchant.bankDetails?.accountTitle || '-' },
+      { label: 'Account Number', value: this.merchant['accountCode']|| '-' },
+      { label: 'IBAN', value: this.merchant.bankDetails?.iban || '-' },
     ];
   }
 }

@@ -1,124 +1,74 @@
-export interface MerchantFormDto {
-    accountCode?: string;
-    addSettlementDetailDto?: SettlementDetailDto
-    addUserRequest?: MerchantUserDto
-    assignedModuleIds?: number[];
-    averageMonthlyVolume?: number;
-    categoryId?: number;
-    cityId?: number;
-    companyRegistrationNumber?: string;
-    contactPersonEmail1?: string;
-    contactPersonEmail2?: string;
-    contactPersonName?: string;
-    contactPersonPhone1?: string;
-    contactPersonPhone2?: string;
-    logoUrl?: string;
-    maximumOrderValue?: number
-    merchantAddress?: string;
-    merchantEmail?: string;
-    merchantName?: string;
-    merchantNotificationDto?: MerchantNotificationDto
-    merchantPhone?: string;
-    minimumOrderValue?: number;
-    profileImage?: string;
-    registrationDate?: string;
-    merchantStatusId?: number;
-    merchantStatus?: string;
-}
-
-export interface SettlementDetailDto {
-    bankId?: number;
-    bankName?: string;
-    bankAccountTitle?: string;
-    ibanNumber?: string;
-    vatNumber?: string;
-    billingAddress?: string;
-}
-
 export interface MerchantUserDto {
-    email?: string;
-    fullName?: string;
-    onlineAccess?: boolean;
-    password?: string;
+  email?: string;
+  fullName?: string;
+  onlineAccess?: boolean;
+  password?: string;
 }
 
-export interface MerchantNotificationDto {
-    email1?: string;
-    email2?: string;
-    sms1?: string;
-    sms2?: string;
-    smsEnabled?:boolean;
-    emailEnabled?:boolean;
-  
+export interface MerchantOwnerDetails {
+  cnicBackImageBase64: string;
+  cnicFrontImageBase64: string;
+  cnicOrPassportNumber: string;
+  contactNumber: string;
+  dateOfBirth: string;
+  email: string;
+  fullName: string;
+  selfieImageBase64: string;
 }
 
+export interface BankDetailsDto {
+  bankId?: number;
+  bankName?: string;
+  accountTitle?: string; // Renamed from bankAccountTitle
+  accountNumber?: string; // Renamed from ibanNumber
+  iban?: string;
+  billingAddress?: string;
+}
 
-export interface MerchantDto {
-    merchantId: number;
-    merchantName?: string;
-    accountCode?: string;
-    merchantCode?: string;
-    merchantEmail?: string;
-    logoUrl?: string;
-    merchantPhone?: string;
-    merchantStatusId?: number;
-    merchantStatus?: string;
-    companyRegistrationDate?: string;
-    merchantAddress?: string;
-    merchantCategoryId?: number;
-    merchantCategory?: string;
-    contactPersonName?: string;
-    contactPersonPhone1?: string;
-    contactPersonPhone2?: string;
-    contactPersonEmail1?: string;
-    contactPersonEmail2?: string;
-    companyRegistrationNumber?: string;
-    merchantCityId?: number;
-    merchantCity?: string;
-    countryId?: number;
-    countryName?: string;
-    minimumOrderValue?: number;
-    maximumOrderValue?: number;
-    averageMonthlyVolume?: number;
-    merchantNotificationResponseDto?: MerchantNotificationDto;
-    merchantSettlementDetail?: SettlementDetailDto;
-    userDetails?: MerchantUserDto;
-    assignedModules?: Array<{ moduleName: string, moduleId:number}>;
-    merchantProfileId?: number;
-    transactionProcessing?: string;
-    merchantProfile?: string;
-    branchLimit?:number;
-    [key: string]: any;
+export interface Document {
+  date?: string;
+  documentBase64?: string; // Renamed to match cURL
+  name?: string;
 }
 
 export interface MerchantBasicInformation {
-    assignedModuleIds?: Array<number>;
-    cityId?: number;
-    logoUrl?: string;
-    merchantCategoryId?: number;
-    merchantName?: string;
-    merchantStatusId?: number;
-    profileImageUrl?: string;
-    registrationDate?: string;
+  merchantId: number;
+  merchantName?: string;
+  merchantPlatformId: string;
+  platformId: number;
+  businessAddress: string;
+  businessRegistrationNumber: string;
+  businessTypeId: number;
+  industryId: number;
+  cityId?: number;
+  stateId: number;
+  countryId: number;
 }
 
-
-export interface MerchantContactInformation {
-    contactPersonEmail1?: string;
-    contactPersonEmail2?: string;
-    contactPersonName?: string;
-    contactPersonPhone1?: string;
-    contactPersonPhone2?: string;
-    merchantAddress?: string;
-    merchantEmail?: string;
-    merchantPhone?: string;
+export interface MerchantFormDto {
+  basicInformation: MerchantBasicInformation;
+  ownerDetails: MerchantOwnerDetails;
+  bankDetails: BankDetailsDto;
+  documents?: Document[];
+  
+  // addUserRequest?: MerchantUserDto; // Optional, not in cURL
 }
 
-
-export interface BusinessStatistics {
-    agent: string
-    averageMonthlyVolume: number
-    maximumOrderValue: number
-    minimumOrderValue: number
-    supportAgent: string
+export interface MerchantDto {
+  merchantId: number;
+  merchantName?: string;
+  merchantPlatformId?: string;
+  platformId?: number;
+  businessAddress: string;
+  businessRegistrationNumber: string;
+  businessTypeId: number;
+  industryId: number;
+  cityId?: number;
+  stateId: number;
+  countryId: number;
+  bankDetails: BankDetailsDto;
+  userDetails?: MerchantUserDto;
+  ownerDetails: MerchantOwnerDetails;
+  documents?: Document[];
+  [key: string]: any;
 }

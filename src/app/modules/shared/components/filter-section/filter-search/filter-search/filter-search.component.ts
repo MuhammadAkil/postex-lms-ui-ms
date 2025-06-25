@@ -112,60 +112,60 @@ export class FilterSearchComponent implements OnInit {
     })
   }
   getDeliveryCities() {
-    this.lookupService.getCityList(this.merchantCountryId).pipe(take(1)).subscribe({
-      next: (data: ResponseDTO<DeliveryCity[]>) => {
-        if (data && data.statusCode?.toString().startsWith('20')) {
-          this.deliveryCityList = data.dist || [];
-          var deliveryCityListFilter = this.filters.find(e => e.variable == ConstantFilterVariable.deliveryCityIds);
-          if (deliveryCityListFilter) {
-            deliveryCityListFilter.options = this.deliveryCityList.map((e) => {
-              return { label: e?.cityName, value: e?.cityId }
-            })
-          }
-        }
-      },
-      error: (err) => {
-        if (err?.status?.toString() == "500") {
-          this.commonService.errorMessage({
-            message: "Oops, it seems like there was an unexpected error. Please try again later or refresh the page",
-            title: err?.status?.toString() || "Error",
-          })
-        } else {
-          this.commonService.errorMessage({
-            message: err?.error?.statusMessage || err?.error?.status?.statusMessageDetail || err?.message,
-            title: err?.status?.toString() || "Error",
-          })
-        }
-      }
-    })
+    // this.lookupService.getCityList(this.merchantCountryId).pipe(take(1)).subscribe({
+    //   next: (data: ResponseDTO<DeliveryCity[]>) => {
+    //     if (data && data.statusCode?.toString().startsWith('20')) {
+    //       this.deliveryCityList = data.dist || [];
+    //       var deliveryCityListFilter = this.filters.find(e => e.variable == ConstantFilterVariable.deliveryCityIds);
+    //       if (deliveryCityListFilter) {
+    //         deliveryCityListFilter.options = this.deliveryCityList.map((e) => {
+    //           return { label: e?.cityName, value: e?.cityId }
+    //         })
+    //       }
+    //     }
+    //   },
+    //   error: (err) => {
+    //     if (err?.status?.toString() == "500") {
+    //       this.commonService.errorMessage({
+    //         message: "Oops, it seems like there was an unexpected error. Please try again later or refresh the page",
+    //         title: err?.status?.toString() || "Error",
+    //       })
+    //     } else {
+    //       this.commonService.errorMessage({
+    //         message: err?.error?.statusMessage || err?.error?.status?.statusMessageDetail || err?.message,
+    //         title: err?.status?.toString() || "Error",
+    //       })
+    //     }
+    //   }
+    // })
   }
   getMerchants() {
-    this.lookupService.getMerchantList().pipe(take(1)).subscribe({
-      next: (data: ResponseDTO<MerchantDto[]>) => {
-        if (data && data.statusCode?.toString().startsWith('20')) {
-          this.merchantsList = data.dist || [];
-          var merchantsListFilter = this.filters.find(e => e.variable == ConstantFilterVariable.merchantId);
-          if (merchantsListFilter) {
-            merchantsListFilter.options = this.merchantsList.map((e) => {
-              return { label: e?.merchantName, value: e?.merchantId }
-            })
-          }
-        }
-      },
-      error: (err) => {
-        if (err?.status?.toString() == "500") {
-          this.commonService.errorMessage({
-            message: "Oops, it seems like there was an unexpected error. Please try again later or refresh the page",
-            title: err?.status?.toString() || "Error",
-          })
-        } else {
-          this.commonService.errorMessage({
-            message: err?.error?.statusMessage || err?.error?.status?.statusMessageDetail || err?.message,
-            title: err?.status?.toString() || "Error",
-          })
-        }
-      }
-    })
+    // this.lookupService.getMerchantList().pipe(take(1)).subscribe({
+    //   next: (data: ResponseDTO<MerchantDto[]>) => {
+    //     if (data && data.statusCode?.toString().startsWith('20')) {
+    //       this.merchantsList = data.dist || [];
+    //       var merchantsListFilter = this.filters.find(e => e.variable == ConstantFilterVariable.merchantId);
+    //       if (merchantsListFilter) {
+    //         merchantsListFilter.options = this.merchantsList.map((e) => {
+    //           return { label: e?.merchantName, value: e?.merchantId }
+    //         })
+    //       }
+    //     }
+    //   },
+    //   error: (err) => {
+    //     if (err?.status?.toString() == "500") {
+    //       this.commonService.errorMessage({
+    //         message: "Oops, it seems like there was an unexpected error. Please try again later or refresh the page",
+    //         title: err?.status?.toString() || "Error",
+    //       })
+    //     } else {
+    //       this.commonService.errorMessage({
+    //         message: err?.error?.statusMessage || err?.error?.status?.statusMessageDetail || err?.message,
+    //         title: err?.status?.toString() || "Error",
+    //       })
+    //     }
+    //   }
+    // })
   }
   onDateChange(result: any, field: any): void {
     field.value = result;
