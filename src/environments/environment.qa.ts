@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  baseUrl: "",
+  baseUrl: "https://qa-api.postex.pk/services/lmscore/api",
 
 };

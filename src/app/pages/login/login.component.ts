@@ -30,22 +30,71 @@ export class LoginComponent {
     return this.loginForm.controls;
   }
 
-  onSubmit(): void {
-    this.submitted = true;
+//  onSubmit(): void {
+//   this.submitted = true;
 
-    if (this.loginForm.invalid) {
-      return;
+//   if (this.loginForm.invalid) return;
+
+//   const formValue = this.loginForm.value;
+
+//   this.authService.login(formValue).subscribe({
+//     next: (res) => {
+//       console.log('Login API response:', res);
+
+//       if (res?.statusCode?.toString().startsWith('20')) {
+//         // ✅ Store user data (only merchantId or userId if needed)
+//         // const userData = {
+//         //   appToken: res.data?.appToken || 'dummy-token',
+//         //   userId: res.data?.userId || 0,
+//         //   merchantId: res.data?.merchantId || 0,
+//         //   email: res.data?.email,
+//         // };
+//         // this.authService.saveUser(userData, true);
+//         this.authService.saveUser({
+//   appToken: 'dummy-token-123456',
+//   userId: 1,
+//   email: formValue.email,
+//   password:formValue.password,
+//   merchantId: 999
+// }, true);
+// this.router.navigate(['/app/dashboard']);
+
+
+
+//         this.router.navigate(['/app/dashboard']);
+//       } else {
+//         console.error('Login failed:');
+//       }
+//     },
+//     error: (err) => {
+//       console.error('Login error:', err);
+//     }
+//   });
+// }
+onSubmit(): void {
+  this.submitted = true;
+
+  if (this.loginForm.invalid) return;
+
+  const formValue = this.loginForm.value;
+
+  this.authService.login(formValue).subscribe({
+    next: (res) => {
+      console.log('Login response:', res);
+
+      if (res.dist?.appToken) {
+        this.authService.saveUser(res.dist, false);
+        this.router.navigate(['/app/dashboard']);
+      } else {
+        console.error('Invalid login data');
+      }
+    },
+    error: (err) => {
+      console.error('Login error:', err);
     }
+  });
+}
 
-    const dummyUser: User = {
-      id: 'user123',
-      token: 'dummy-token-123456',
-      email: this.loginForm.value.email
-    };
-
-    this.authService.login(dummyUser);
-    this.router.navigate(['/app/dashboard']);
-  }
 
   togglePasswordVisibility(): void {
     this.passwordVisible = !this.passwordVisible;

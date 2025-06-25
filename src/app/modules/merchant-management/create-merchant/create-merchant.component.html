@@ -128,7 +128,7 @@
       </div>
       <div class="formGroup flex items-center gap-4">
         <div class="w-1/2"></div>
-        <div class="w-1/2">
+        <!-- <div class="w-1/2">
           <a (click)="addNewField()" class="text-blue-500 underline cursor-pointer">Add New Field</a>
           <div *ngFor="let field of dynamicFields; let i = index" class="mt-4">
             <div class="flex flex-col">
@@ -141,7 +141,7 @@
             </div>
             <button (click)="removeField(i)" nz-button type="button" class="btn btn-outline mt-2">Remove</button>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="flex gap-3 mt-4">
         <button (click)="currentStep = currentStep - 1" nz-button type="button" class="btn btn-outline" [disabled]="currentStep === 1">Close</button>
