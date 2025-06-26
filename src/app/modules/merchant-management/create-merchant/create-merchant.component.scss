@@ -1,11 +1,21 @@
-#edit-merchant{
+#edit-merchant {
     background-color: var(--grey-color);
     margin: -15px;
     padding: 15px;
     height: calc(100vh - 36px - var(--header-height));
 }
-button.ant-btn.upload-btn{
+
+button.ant-btn.upload-btn {
     color: #92CF4F !important;
-justify-content:start !important;
-padding-left:12px ;
+    justify-content: start !important;
+    padding-left: 12px;
 }
+
+button.ant-btn.doc-upload-btn {
+    height: 0 !important;
+    padding: 0 !important;
+    border: none;
+    justify-content: start !important;
+}
+
+

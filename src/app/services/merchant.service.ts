@@ -15,12 +15,15 @@ export class MerchantService {
     return this.http.post(`/merchant/create`, merchantForm, {});
   }
 
-  getMerchantDetail(merchantId: number): Observable<ResponseDTO<Array<MerchantDto>>> {
-    return this.http.get(`/merchant/${merchantId}/detail`, {});
+  getRequestDetail(requestId: number): Observable<ResponseDTO<Array<MerchantDto>>> {
+    return this.http.get(`/merchant/request-detail` ,{params:{requestId:requestId || ''}});
+  }
+  getRequestRemarks(requestId: number): Observable<ResponseDTO<Array<MerchantDto>>> {
+    return this.http.get(`/remarks/merchant-request-remark` ,{params:{requestId:requestId || ''}});
   }
 
-  getAllMerchant(params: any): Observable<ResponseDTO<Array<MerchantDto>>> {
-    return this.http.get(`/merchant/merchantsList`, {params:params});
+  getAllRequests(params: any): Observable<ResponseDTO<Array<MerchantDto>>> {
+    return this.http.get(`/merchant/request-logs`, {params:params});
   }
 
   updateBasicInformation(merchantId:number,basicInfo:MerchantBasicInformation): Observable<ResponseDTO<any>> {

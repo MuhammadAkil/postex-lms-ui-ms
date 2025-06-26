@@ -57,12 +57,12 @@ export class ViewDetailComponent implements OnInit {
 
   ngOnInit(): void {
     if (!isNaN(this.merchantId) && this.merchantId) {
-      this.getMerchantDetail();
+      this.getRequestDetail();
     }
   }
 
-  getMerchantDetail() {
-    this.merchantService.getMerchantDetail(this.merchantId).subscribe(d => {
+  getRequestDetail() {
+    this.merchantService.getRequestDetail(this.merchantId).subscribe(d => {
       if (d.statusCode?.toString().startsWith('20') && d.dist?.length) {
         this.merchant = d.dist[0];
       } else {

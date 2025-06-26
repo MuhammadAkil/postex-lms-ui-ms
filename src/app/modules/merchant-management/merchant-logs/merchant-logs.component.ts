@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FilterObject, GetSelectedFilters, ConstantFilterVariable } from 'src/app/constant/filters';
+import { MerchantFormDto } from 'src/app/constant/interface/merchant.interface';
 import { Pagination } from 'src/app/constant/interface/pagination.interface';
 import { ListColumn } from 'src/app/constant/model/list-column.model';
 import { SearchCriteria } from 'src/app/constant/model/searchCriteria.model';
 import { MerchantDto } from 'src/app/models/merchant.interface';
 import { CommonService } from 'src/app/services/common.service';
 import { MerchantService } from 'src/app/services/merchant.service';
+import { ViewRemarksComponent } from '../view-remarks/view-remarks.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-merchant-logs',
@@ -13,52 +16,10 @@ import { MerchantService } from 'src/app/services/merchant.service';
   styleUrls: ['./merchant-logs.component.scss']
 })
 export class MerchantLogsComponent implements OnInit {
-  dummyMerchantData = [
-    {
-      merchantId: 1,
-      merchantName: 'ABC Retailer',
-      lmsId: 'LMS-001',
-      partner: 'Partner A',
-      partnerAccountId: 'ACC-123',
-      merchant: 'ABC Retailer',
-      owner: 'John Doe',
-      type: 'Retail',
-      registrationDate: '2024-01-10',
-      complianceStatus: 'Approved',
-      merchantStatusId: 1
-    },
-    {
-      merchantId: 2,
-      merchantName: 'XYZ Wholesaler',
-      lmsId: 'LMS-002',
-      partner: 'Partner B',
-      partnerAccountId: 'ACC-456',
-      merchant: 'XYZ Wholesaler',
-      owner: 'Jane Smith',
-      type: 'Wholesale',
-      registrationDate: '2023-12-05',
-      complianceStatus: 'Pending',
-      merchantStatusId: 2
-    },
-    {
-      merchantId: 2,
-      merchantName: 'ABC',
-      lmsId: 'LMS-003',
-      partner: 'Partner C',
-      partnerAccountId: 'ACC-456',
-      merchant: 'ABC',
-      owner: 'Jane Smith',
-      type: 'Wholesale',
-      registrationDate: '2023-12-05',
-      complianceStatus: 'Review Requested',
-      merchantStatusId: 2
-    }
-  ];
-
   listOfColumn: ListColumn[] = [
     { title: 'Sr #', property: 'serialNo', visible: true },
-    { title: 'LMS ID', property: 'lmsId', visible: true },
-    { title: 'Partner', property: 'partner', visible: true },
+    { title: 'LMS ID', property: 'lmsId', visible: true }, // Remove if not in API
+    { title: 'Partner', property: 'partner', visible: true }, // Remove if not in API
     { title: 'Partner Account ID', property: 'partnerAccountId', visible: true },
     { title: 'Merchant', property: 'merchant', visible: true },
     { title: 'Owner', property: 'owner', visible: true },
@@ -66,53 +27,66 @@ export class MerchantLogsComponent implements OnInit {
     { title: 'Registration Date', property: 'registrationDate', visible: true },
     { title: 'Compliance Status', property: 'complianceStatus', visible: true },
     { title: 'Actions', property: 'action', visible: true },
-  ] as ListColumn[];
-  isLoading: boolean = false;
+  ];
+  isLoading = false;
   searchCriteria = new SearchCriteria();
-  pagination: Pagination = {
-    page: 0, size: 25,
-    total: 0
-  };
-  merchantDataList: Array<MerchantDto> = [];
-  originalDataList: Array<MerchantDto> = [];
-  filters: FilterObject[] = GetSelectedFilters([ConstantFilterVariable.merchantName, ConstantFilterVariable.merchantCode]);
-  selectedStatus: string = 'All'; // Default to "All"
+  pagination: Pagination = { page: 0, size: 25, total: 0 };
+  merchantDataList: any[] = [];
+  originalDataList: any[] = [];
+  filters: FilterObject[] = GetSelectedFilters([
+    ConstantFilterVariable.merchantName,
+    ConstantFilterVariable.merchantCode,
+  ]);
+  selectedStatus: string = 'All';
 
   constructor(
     private merchantService: MerchantService,
     private commonService: CommonService,
-  ) { }
+    private dialog: MatDialog,
+
+  ) {}
 
   ngOnInit(): void {
-    this.getMerchants();
+    this.getRequests();
   }
 
-  getMerchants() {
+  getRequests() {
     const filter = { ...this.searchCriteria, page: this.pagination.page, size: this.pagination.size };
     this.isLoading = true;
 
-    this.merchantService.getAllMerchant(filter).subscribe({
-      next: (d) => {
-        if (d.statusCode?.toString().startsWith('20')) {
-          // this.originalDataList = [...d.dist || []];
-          this.filterByStatus(this.selectedStatus); // Apply initial filter
-          this.pagination = d.pagination || this.pagination;
-        } else {
-          this.loadDummyData();
-        }
+    this.merchantService.getAllRequests(filter).subscribe({
+      next: (res) => {
         this.isLoading = false;
+        if (res.statusCode?.toString().startsWith('20') && res.dist?.length) {
+          this.originalDataList = res.dist.map((item: any) => ({
+            requestId: item.requestId,
+            lmsId: '-',
+            partner: '-',
+            partnerAccountId: item.basicInformation?.partnerAccountId || '-',
+            merchant: item.basicInformation?.businessAddress || '-',
+            owner: item.ownerDetails?.ownerFullName || '-',
+            type: item.basicInformation?.businessType || '-',
+            registrationDate: item.enteredAt ? item.enteredAt.split('T')[0] : '-',
+            complianceStatus: item.status || '-',
+            merchantStatusId: 1
+          }));
+
+          this.filterByStatus(this.selectedStatus);
+          this.pagination = res.pagination || this.pagination;
+        } else {
+          this.originalDataList = [];
+          this.merchantDataList = [];
+          this.pagination.total = 0;
+        }
       },
       error: () => {
         this.isLoading = false;
-        this.loadDummyData();
-      }
+        this.commonService.errorMessage({
+          title: 'Error',
+          message: 'Failed to fetch request logs. Please try again later.',
+        });
+      },
     });
-  }
-
-  loadDummyData() {
-    this.originalDataList = [...this.dummyMerchantData];
-    this.filterByStatus(this.selectedStatus); // Apply filter to dummy data
-    this.pagination.total = this.dummyMerchantData.length;
   }
 
   filterByStatus(status: string) {
@@ -120,57 +94,79 @@ export class MerchantLogsComponent implements OnInit {
     if (status === 'All') {
       this.merchantDataList = [...this.originalDataList];
     } else {
-      this.merchantDataList = this.originalDataList.filter(merchant =>
-        merchant.complianceStatus === status || (status === 'Pending' && merchant.complianceStatus === 'New Requested')
+      this.merchantDataList = this.originalDataList.filter(
+        (merchant) =>
+          merchant.complianceStatus === status || (status === 'Pending' && merchant.complianceStatus === 'New Requested')
       );
     }
     this.pagination.total = this.merchantDataList.length;
   }
 
-  updateMerchantStatus(merchant: MerchantDto, merchantStatus: number) {
-    const dialog = this.commonService.confirmation({ message: `Are you sure you want to change status of <b class="inline-block">${merchant.merchantName}</b> to <b>${merchant.merchantStatusId ? 'Inactive' : 'Active'}</b>`, title: "Status Change" });
+viewRemarks(requestId:number) {
+            this.dialog.open(ViewRemarksComponent, {
+            position: { top: "100px" },
+                data: {
+                    requestId: requestId,
+                },
+                autoFocus: true,
+              minWidth: "400px",
+                maxHeight: "85vh",
+                minHeight: "350px",
+                disableClose: false,
+                hasBackdrop: true,
+            }).afterClosed().subscribe(action => {
+            if (action) {
+              
+            }
+        });
+        }
+
+  updateMerchantStatus(merchant: any, merchantStatus: number) {
+    const dialog = this.commonService.confirmation({
+      message: `Are you sure you want to change status of <b class="inline-block">${merchant.merchant}</b> to <b>${merchantStatus === 1 ? 'Active' : 'Inactive'}</b>`,
+      title: 'Status Change',
+    });
+
     dialog?.afterClosed().subscribe((confirmed: any) => {
       if (confirmed) {
         this.isLoading = true;
-        this.merchantService.changeMerchantStatus(merchant.merchantId, merchantStatus).subscribe(d => {
-          if (d.statusCode?.toString().startsWith("20")) {
+        this.merchantService.changeMerchantStatus(merchant.requestId, merchantStatus).subscribe(
+          (res) => {
             this.isLoading = false;
-            this.getMerchants();
+            if (res.statusCode?.toString().startsWith('20')) {
+              this.getRequests();
+            }
+          },
+          (err) => {
+            this.isLoading = false;
+            this.commonService.errorMessage({
+              title: err?.status?.toString() || 'Error',
+              message:
+                err?.error?.statusMessage ||
+                err?.error?.status?.statusMessageDetail ||
+                err?.message ||'Unexpected error occurred.',
+            });
           }
-        }, err => {
-          this.isLoading = false;
-          if (err?.status?.toString() == '500') {
-            this.commonService.errorMessage({ title: err?.status?.toString() || 'Error', message: 'Oops, it seems like there was an unexpected error. Please try again later or refresh the page', });
-          } else {
-            this.commonService.errorMessage({ title: err?.status?.toString() || 'Error', message: err?.error?.statusMessage || err?.error?.status?.statusMessageDetail || err?.message, });
-          }
-        });
+        );
       }
     });
   }
 
   paginationChange(event: Pagination) {
     this.pagination = event;
-    this.getMerchants();
+    this.getRequests();
   }
 
   onFilterChange(value: any) {
-    if (!this.originalDataList) {
-      return;
-    }
+    if (!this.originalDataList) return;
+
     if (value) {
-      value = value.trim().toLowerCase();
-      this.merchantDataList = this.originalDataList.filter((item: any) => {
-        for (const prop in item) {
-          if (item.hasOwnProperty(prop)) {
-            const propValue = item[prop];
-            if (propValue?.toString().toLowerCase().includes(value.toString().toLowerCase())) {
-              return true;
-            }
-          }
-        }
-        return false;
-      });
+      const searchValue = value.trim().toLowerCase();
+      this.merchantDataList = this.originalDataList.filter((item) =>
+        Object.values(item).some((val) =>
+          val?.toString().toLowerCase().includes(searchValue)
+        )
+      );
     } else {
       this.merchantDataList = [...this.originalDataList];
     }
@@ -180,6 +176,6 @@ export class MerchantLogsComponent implements OnInit {
   applyFilter(event: any) {
     this.pagination.page = 0;
     this.searchCriteria = event;
-    this.getMerchants();
+    this.getRequests();
   }
 }

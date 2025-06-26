@@ -631,3 +631,10 @@ body { margin: 0; font-family: Inter, sans-serif; }
   color: var(--review-border);
   background-color: var(--review-bg);
 }
+.mat-mdc-dialog-surface .mdc-dialog__surface{
+    border-radius: 16px !important;
+}
+.mat-dialog-container{
+    border-radius: 16px !important;
+
+}

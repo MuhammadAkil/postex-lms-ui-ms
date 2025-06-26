@@ -1,0 +1,28 @@
+<div class="w-full p-4 bg-white rounded-2xl">
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-4 mt-2">
+    <h3 class="text-lg font-semibold mb-0">View Remarks</h3>
+ 
+      <button matButton mat-dialog-close class="size-5"><img src="assets/svgs/close-icon.svg" alt="close"></button>
+
+  </div>
+
+  <!-- Remarks Box -->
+  <div class="p-4">
+    <!-- Title, Time, Status -->
+    <div class="flex justify-between items-start mb-4">
+      <div>
+        <h4 class="text-base font-semibold text-gray-800 mb-0">{{ remarksData.title }}</h4>
+        <span class="text-sm text-gray-500">{{ remarksData.date }} {{ remarksData.time }}</span>
+      </div>
+      <span class="bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap">
+        {{ remarksData.status }}
+      </span>
+    </div>
+
+    <!-- Remarks List -->
+    <ul class="list-disc pl-5 space-y-1 text-sm text-gray-700">
+      <li *ngFor="let remark of remarksData.remarksList">{{ remark }}</li>
+    </ul>
+  </div>
+</div>

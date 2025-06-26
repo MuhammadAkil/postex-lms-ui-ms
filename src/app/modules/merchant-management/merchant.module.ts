@@ -17,6 +17,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ViewDetailComponent } from './view-detail/view-detail.component';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { ViewRemarksComponent } from './view-remarks/view-remarks.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 const routes: Routes = [
@@ -32,7 +34,8 @@ const routes: Routes = [
   declarations: [
     MerchantLogsComponent,
     CreateMerchantComponent,
-    ViewDetailComponent
+    ViewDetailComponent,
+    ViewRemarksComponent
 
   ],
  imports: [
@@ -55,6 +58,7 @@ const routes: Routes = [
     MatMenuModule,
     NzButtonModule,
     NzCollapseModule,
+    MatDialogModule,
     RouterModule.forChild(routes)
   ],
   exports: [RouterModule]

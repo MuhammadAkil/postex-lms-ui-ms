@@ -63,29 +63,26 @@
                                             <div (click)="$event.stopPropagation()" class="menu-label">Actions</div>
                                             <div class="menu-divider"></div>
 
-                                          <!-- View Details -->
-<button
-  class="action-btn"
-  [routerLink]="['/app/merchant/detail', data.merchantId]">
-  <img src="assets/svgs/view_merchant_icon.svg" class="icon" />
-  <span>View Details</span>
-</button>
+                                            <!-- View Details -->
+                                            <button class="action-btn"
+                                                [routerLink]="['/app/merchant/detail', data.requestId]">
+                                                <img src="assets/svgs/view_merchant_icon.svg" class="icon" />
+                                                <span>View Details</span>
+                                            </button>
 
-<!-- Edit Merchant -->
-<button
-  class="action-btn"
-  [routerLink]="['/app/merchant/edit', data.merchantId]">
-  <img src="assets/svgs/edit_merchant_icon.svg" class="icon" />
-  <span>Edit Merchant</span>
-</button>
+                                            <!-- Edit Merchant -->
+                                            <button class="action-btn"
+                                                [routerLink]="['/app/merchant/edit', data.requestId]">
+                                                <img src="assets/svgs/edit_merchant_icon.svg" class="icon" />
+                                                <span>Edit Merchant</span>
+                                            </button>
 
-<!-- View Review -->
-<button
-  class="action-btn"
-  (click)="updateMerchantStatus(data, data.merchantStatusId === 1 ? 2 : 1)">
-  <img src="assets/svgs/view-review-icon.svg" class="icon" />
-  <span>View Review</span>
-</button>
+                                            <!-- View Review -->
+                                            <button class="action-btn"
+                                                (click)="viewRemarks(data.requestId)">
+                                                <img src="assets/svgs/view-review-icon.svg" class="icon" />
+                                                <span>View Review</span>
+                                            </button>
 
                                         </mat-menu>
 
