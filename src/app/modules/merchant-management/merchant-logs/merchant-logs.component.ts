@@ -18,8 +18,8 @@ import { MatDialog } from '@angular/material/dialog';
 export class MerchantLogsComponent implements OnInit {
   listOfColumn: ListColumn[] = [
     { title: 'Sr #', property: 'serialNo', visible: true },
-    { title: 'LMS ID', property: 'lmsId', visible: true }, // Remove if not in API
-    { title: 'Partner', property: 'partner', visible: true }, // Remove if not in API
+    { title: 'LMS ID', property: 'lmsId', visible: true }, 
+    { title: 'Partner', property: 'partner', visible: true },
     { title: 'Partner Account ID', property: 'partnerAccountId', visible: true },
     { title: 'Merchant', property: 'merchant', visible: true },
     { title: 'Owner', property: 'owner', visible: true },

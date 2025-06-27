@@ -23,19 +23,16 @@ import { EyeOutline, EyeInvisibleOutline } from '@ant-design/icons-angular/icons
 import { MatMenuModule } from '@angular/material/menu';
 
 
+
 const routes: Routes = [
-  {
-    path: '',
-    canActivate: [authGuard],
-    component: LayoutComponent,
-    children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: DashboardComponent },
+  { path:"", component:LayoutComponent, children:[
+    { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+     { path: 'dashboard', component: DashboardComponent },
       { path: 'merchant', loadChildren: () => import('../modules/merchant-management/merchant.module').then(m => m.MerchantModule)},
       { path: 'role-management', loadChildren: () => import('../modules/role-management/role-management.module').then(m => m.RoleManagementModule)},
-    ]
-  }
-];
+     ]
+  },
+]
 
 @NgModule({
   declarations: [

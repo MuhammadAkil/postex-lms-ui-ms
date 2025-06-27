@@ -1,49 +1,39 @@
-<div class="p-6">
+<form [formGroup]="roleForm" (ngSubmit)="saveRole()" class="p-6">
   <!-- Breadcrumb -->
   <nz-breadcrumb>
     <nz-breadcrumb-item><a routerLink="/app/dashboard">Home</a></nz-breadcrumb-item>
     <nz-breadcrumb-item>Role Management</nz-breadcrumb-item>
   </nz-breadcrumb>
 
- <!-- Platform and User Selection -->
-<div class="mt-6 flex gap-4">
-  <div>
-    <label class="block font-medium mb-2">Select the platform on which you registered</label>
-    
-    <nz-radio-group [(ngModel)]="selectedPlatform" class="px-3">
-        <label nz-radio [nzValue]="'OMS'" class="border mx-2 px-3 py-2 rounded-lg mr-4">OMS</label>
-      <label nz-radio [nzValue]="'Logistics'" class="mr-4 border px-3 py-2 rounded-lg">Logistics</label>
-      <label nz-radio [nzValue]="'XPay'" class="mr-4 border px-3 py-2 rounded-lg">XPay</label>
-    </nz-radio-group>
-  </div>
+  <!-- Platform and User Selection -->
+  <div class="mt-6 flex gap-4">
+    <div>
+      <label class="block font-medium mb-2">Select the platform on which you registered</label>
+      <nz-radio-group formControlName="platform" class="px-3">
+        <label *ngFor="let platform of platforms" nz-radio [nzValue]="platform"
+          class="border mx-2 px-3 py-2 rounded-lg mr-4">{{ platform }}</label>
+      </nz-radio-group>
+    </div>
 
-  <div class="min-w-[352px] formGroup">
-    <label class="block font-medium mb-2">User</label>
-    <nz-select
-      nzShowSearch
-      [(ngModel)]="selectedUser"
-      nzPlaceHolder="Select User"
-      class="w-full !rounded-md"
-    >
-      <nz-option *ngFor="let user of users" [nzValue]="user" [nzLabel]="user"></nz-option>
-    </nz-select>
+    <div class="min-w-[352px] formGroup">
+      <label class="block font-medium mb-2">User</label>
+      <nz-select
+        formControlName="user"
+        nzShowSearch
+        nzPlaceHolder="Select User"
+        class="w-full !rounded-md"
+      >
+        <nz-option *ngFor="let user of users" [nzValue]="user" [nzLabel]="user"></nz-option>
+      </nz-select>
+    </div>
   </div>
-</div>
 
   <!-- Role Section -->
   <div class="p-6 mt-6">
     <h2 class="text-lg font-semibold mb-4">Role</h2>
-
-    <nz-radio-group [(ngModel)]="selectedRole">
+    <nz-radio-group formControlName="role">
       <div class="grid grid-cols-2 gap-2 max-w-xl">
-        <label nz-radio [nzValue]="'Admin'">Admin</label>
-        <label nz-radio [nzValue]="'Compliance'">Compliance</label>
-        <label nz-radio [nzValue]="'Merchant Initiator'">Merchant Initiator</label>
-        <label nz-radio [nzValue]="'Finance Team'">Finance Team</label>
-        <label nz-radio [nzValue]="'Loan Initiator'">Loan Initiator</label>
-        <label nz-radio [nzValue]="'Finance Approver'">Finance Approver</label>
-        <label nz-radio [nzValue]="'Loan Approver'">Loan Approver</label>
-        <label nz-radio [nzValue]="'User Manager'">User Manager</label>
+        <label *ngFor="let role of roles" nz-radio [nzValue]="role">{{ role }}</label>
       </div>
     </nz-radio-group>
 
@@ -51,9 +41,9 @@
       nz-button
       nzType="primary"
       class="mt-6 !bg-black !text-white !px-6 !py-2 !rounded !hover:bg-gray-800"
-      (click)="saveRole()"
+      type="submit"
     >
       Save
     </button>
   </div>
-</div>
+</form>

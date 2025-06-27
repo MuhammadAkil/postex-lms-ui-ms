@@ -11,27 +11,27 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  // login(credentials: { email: string; password: string }): Observable<ResponseDTO<any>> {
-  //   return this.http.post('/user/login', credentials);
-  // }
-login(credentials: { email: string; password: string }) {
-  // Simulate a fake API response
-  const fakeResponse = {
-    message: 'Login successful',
-    dist: {
-      userId: 1,
-      email: credentials.email,
-      fullName: 'Test User',
-      appToken: 'dummy-token-123456',
-      userType: 'admin'
-    },
-    statusCode: '200',
-    statusMessage: 'OK'
-  };
+  login(credentials: { email: string; password: string ;applicationTypeId:number}): Observable<ResponseDTO<any>> {
+    return this.http.post('/user/login', credentials);
+  }
+// login(credentials: { email: string; password: string }) {
+//   // Simulate a fake API response
+//   const fakeResponse = {
+//     message: 'Login successful',
+//     dist: {
+//       userId: 1,
+//       email: credentials.email,
+//       fullName: 'Test User',
+//       appToken: 'dummy-token-123456',
+//       userType: 'admin'
+//     },
+//     statusCode: '200',
+//     statusMessage: 'OK'
+//   };
 
-  // Return it as Observable
-  return of(fakeResponse);
-}
+//   // Return it as Observable
+//   return of(fakeResponse);
+// }
 
   logout(): void {
     const dist = this.getStoredUser();
@@ -46,17 +46,31 @@ login(credentials: { email: string; password: string }) {
     }
   }
 
-  saveUser(data: any, rememberMe: boolean): void {
-    const storage = rememberMe ? localStorage : sessionStorage;
-    storage.setItem(this.STORAGE_KEY, JSON.stringify(data || {}));
-  }
+  // saveUser(data: any, ): void {
+  //   const storage =  sessionStorage;
+  //   storage.setItem(this.STORAGE_KEY, JSON.stringify(data || {}));
+  // }
+
+  saveUser(data: any): void {
+  const enrichedData = {
+    ...data,
+    // merchantId: data?.merchantId || 0,
+    // merchantName: data?.merchantName || '',
+    // logoUrl: data?.logoUrl || '',
+    // merchantCountryId: data?.merchantCountryId || 0,
+    // userType: data?.userType || '', // If missing, default empty
+  };
+
+  const json = JSON.stringify(enrichedData);
+  sessionStorage.setItem(this.STORAGE_KEY, json);
+}
 
   isLoggedIn(): boolean {
     return !!this.getToken();
   }
 
   getToken(): string {
-    return this.getStoredUser()?.appToken || '';
+    return this.getStoredUser()?.jwtToken || '';
   }
 
   getUserId(): number {
@@ -113,7 +127,7 @@ login(credentials: { email: string; password: string }) {
   }
 
   private getStoredUser(): any {
-    return JSON.parse(sessionStorage.getItem(this.STORAGE_KEY) || localStorage.getItem(this.STORAGE_KEY) || '{}');
+    return JSON.parse(sessionStorage.getItem(this.STORAGE_KEY) || '{}');
   }
 
   private clearStorage(): void {

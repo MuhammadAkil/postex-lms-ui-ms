@@ -4,16 +4,15 @@ import { authGuard } from './gaurd/auth.guard';
 import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
-  { path: 'auth', component: LoginComponent },
+  { path: '', pathMatch: 'full', redirectTo: 'app' },
   {
-    path: 'app',
-    canActivate: [authGuard],
-    loadChildren: () => import('./layout/layout.module').then(m => m.LayoutModule)
+    path: 'auth', children: [
+      { path: "", pathMatch: "full", redirectTo: "login" },
+      { path: "login", component: LoginComponent }
+    ]
   },
-  { path: '', redirectTo: 'auth', pathMatch: 'full' },
-  { path: '**', redirectTo: 'auth' } 
+  { path: 'app', canActivate:[authGuard],loadChildren: () => import('./layout/layout.module').then(m => m.LayoutModule) }
 ];
-
 @NgModule({
   imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
   exports: [RouterModule]

@@ -60,6 +60,12 @@ export interface Profile {
     merchantProfileId: Number,
     profile: string
 }
+export interface userRoles {
+    roleId: Number,
+    roleName: string
+    userId:Number
+}
+
 
 
 export interface MerchantLookup {

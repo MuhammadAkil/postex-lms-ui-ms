@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ResponseDTO } from '../constant/interface/responseDTO.interface';
-import { Bank, BusinessType, City, Country, DeliveryCity, Industry, MerchantCategory, MerchantLookup, Module, Partner, Platform, Profile, State } from '../constant/interface/lookup.interface';
+import { Bank, BusinessType, City, Country, Industry, MerchantCategory, MerchantLookup, Module, Partner, Platform, Profile, State, userRoles } from '../constant/interface/lookup.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -38,8 +38,8 @@ export class LookupService {
     return this.http.get(`/lookup/merchant-category`, {});
   }
 
-  getModuleList(): Observable<ResponseDTO<Module[]>> {
-    return this.http.get(`/lookup/module`, {});
+  getRolesList(countryId: userRoles | undefined): Observable<ResponseDTO<userRoles[]>> {
+    return this.http.get(`/lookup/roles`, {});
   }
 
   getBankList(): Observable<ResponseDTO<Array<Bank>>> {

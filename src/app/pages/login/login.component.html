@@ -6,10 +6,10 @@
             <p class="text-base font-semibold text-center mb-7">Loan Management System</p>
         </div>
         <h2 class="text-black font-semibold text-xl mb-4 ">Login</h2>
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="loginForm" class="login-form" (ngSubmit)="onSubmit()">
             <div class="mb-4">
                 <label class="block mb-1 font-medium">Email</label>
-                <input nz-input formControlName="email" placeholder="Enter Email" class="w-full" />
+                <input (keydown.enter)="onSubmit()" appUniqueNameAttribute nz-input maxlength="320" type="text" formControlName="email" placeholder="Enter Email" class="w-full" />
                 <div *ngIf="submitted && f['email'].errors" class="text-red-500 text-sm mt-1">
                     <div *ngIf="f['email'].errors['required']">Email is required</div>
                     <div *ngIf="f['email'].errors['email']">Invalid email</div>
@@ -18,7 +18,7 @@
 
             <div class="mb-4 relative">
                 <label class="block mb-1 font-medium">Password</label>
-                <input nz-input [type]="passwordVisible ? 'text' : 'password'" formControlName="password"
+                <input (keydown.enter)="onSubmit()" appUniqueNameAttribute maxlength="100" minlength="8" nz-input [type]="passwordVisible ? 'text' : 'password'" formControlName="password"
                     placeholder="Enter Password" class="w-full pr-10" />
 
                 <span class="absolute right-3 top-7 cursor-pointer text-gray-500 hover:text-black"
@@ -34,7 +34,7 @@
                 Forgot Password?
             </div>
 
-            <button nz-button nzType="primary" class="w-full !bg-black !hover:bg-gray-800 !text-white"
+            <button nz-button nzType="primary" class="w-full login-btn !bg-black !hover:bg-gray-800 !text-white"
                 [disabled]="loginForm.invalid">
                 Login
             </button>
